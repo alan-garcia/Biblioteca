@@ -1,0 +1,55 @@
+﻿@model PagedResult<AutorVM>
+
+@if (!Model.Items.Any())
+{
+    <div class="libro-alert libro-alert-info" role="alert">
+        <span class="font-medium">@Localizer["AutoresSearchNotFound"]</span>
+    </div>
+}
+else
+{
+    <!-- Enlaces de navegación -->
+    @await Html.PartialAsync("_Pagination", Model)
+
+    <table class="text-gray-500 w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-700 text-xs">
+            <tr>
+                <th scope="col" class="p-4">
+                    <div class="flex items-center">
+                        <input name="allIdsAutor" type="checkbox" class="libro-checkbox-input">
+                        <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">@Html.DisplayNameFor(model => model.Items.First().Nombre)</th>
+                <th scope="col" class="px-6 py-3">@Html.DisplayNameFor(model => model.Items.First().Apellido)</th>
+                <th scope="col" class="px-6 py-3">@Html.DisplayNameFor(model => model.Items.First().FechaNacimiento)</th>
+                <th scope="col" class="px-6 py-3">@Localizer["AccionesTitle"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var autor in Model.Items)
+            {
+                <tr class="bg-white border-b">
+                    <td class="w-4 p-4">
+                        <div class="flex items-center">
+                            <input name="idsAutor" type="checkbox" value="@autor.Id" class="libro-checkbox-input">
+                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                        </div>
+                    </td>
+                    <td scope="row" class="libro-table-row-content">@autor.Nombre</td>
+                    <td scope="row" class="libro-table-row-content">@autor.Apellido</td>
+                    <td scope="row" class="libro-table-row-content">@autor.FechaNacimiento.ToShortDateString()</td>
+                    <td class="px-6 py-4">
+                        <a asp-route="autorVer" asp-route-id="@autor.Id" class="libro-btn libro-btn-info">@Localizer["VerButton"]</a>
+                        <a asp-route="autorEdit" asp-route-id="@autor.Id" class="libro-btn libro-btn-edit">@Localizer["ModificarButton"]</a>
+                        <a asp-route="autorDelete" asp-route-id="@autor.Id" onclick="Eliminar(this.href); return false;" class="libro-btn libro-btn-delete cursor-pointer">@Localizer["EliminarButton"]</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="my-4">
+        <a asp-route="autorDeleteMultiple" onclick="EliminarSeleccionados(this.href); return false;" class="libro-btn libro-btn-delete">@Localizer["EliminarSelectedButton"]</a>
+    </div>
+}

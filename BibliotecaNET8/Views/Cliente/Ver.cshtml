@@ -1,0 +1,24 @@
+﻿@model ClienteVM
+
+<h1 class="libro-title">@Localizer["VerClienteTitle"]</h1>
+
+<form class="mx-auto max-w-md">
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="Nombre" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" disabled />
+        <label asp-for="Nombre" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:left-auto">@Html.DisplayNameFor(model => model.Nombre)</label>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="Apellido" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" disabled />
+        <label asp-for="Apellido" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:left-auto">@Html.DisplayNameFor(model => model.Apellido)</label>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="Email" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" disabled />
+        <label asp-for="Email" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:left-auto">@Html.DisplayNameFor(model => model.Email)</label>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="Telefono" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" disabled />
+        <label asp-for="Telefono" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:left-auto">@Html.DisplayNameFor(model => model.Telefono)</label>
+    </div>
+
+    <a asp-route="clienteIndex" class="libro-btn libro-btn-info">@Localizer["VolverButton"]</a>
+</form>

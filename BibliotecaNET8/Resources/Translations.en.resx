@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccionesTitle" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AutorCreadoMessageSuccess" xml:space="preserve">
+    <value>Author created successfully</value>
+  </data>
+  <data name="AutorEliminadoMessageFail" xml:space="preserve">
+    <value>Error deleting author</value>
+  </data>
+  <data name="AutorEliminadoMessageSuccess" xml:space="preserve">
+    <value>Author deleted successfully</value>
+  </data>
+  <data name="AutorEliminadoMultipleMessageFail" xml:space="preserve">
+    <value>Error deleting multiple authors</value>
+  </data>
+  <data name="AutorEliminadoMultipleMessageSuccess" xml:space="preserve">
+    <value>Authors deleted successfully</value>
+  </data>
+  <data name="AutoresSearchNotFound" xml:space="preserve">
+    <value>Authors not found with this term</value>
+  </data>
+  <data name="AutorModificadoMessageSuccess" xml:space="preserve">
+    <value>Author modified successfully</value>
+  </data>
+  <data name="CategoriaCreadaMessageSuccess" xml:space="preserve">
+    <value>Category created successfully</value>
+  </data>
+  <data name="CategoriaEliminadaMessageFail" xml:space="preserve">
+    <value>Error deleting category</value>
+  </data>
+  <data name="CategoriaEliminadaMessageSuccess" xml:space="preserve">
+    <value>Category deleted successfully</value>
+  </data>
+  <data name="CategoriaEliminadaMultipleMessageFail" xml:space="preserve">
+    <value>Error deleting multiple categories</value>
+  </data>
+  <data name="CategoriaEliminadaMultipleMessageSuccess" xml:space="preserve">
+    <value>Categories deleted successfully</value>
+  </data>
+  <data name="CategoriaModificadaMessageSuccess" xml:space="preserve">
+    <value>Category modified successfully</value>
+  </data>
+  <data name="CategoriasSearchNotFound" xml:space="preserve">
+    <value>Categories not found with this term</value>
+  </data>
+  <data name="ClienteCreadoMessageSuccess" xml:space="preserve">
+    <value>Customer created successfully</value>
+  </data>
+  <data name="ClienteEliminadoMessageFail" xml:space="preserve">
+    <value>Error deleting customers</value>
+  </data>
+  <data name="ClienteEliminadoMessageSuccess" xml:space="preserve">
+    <value>Customer deleted successfully</value>
+  </data>
+  <data name="ClienteEliminadoMultipleMessageFail" xml:space="preserve">
+    <value>Error deleting multiple customers</value>
+  </data>
+  <data name="ClienteEliminadoMultipleMessageSuccess" xml:space="preserve">
+    <value>Customers created successfully</value>
+  </data>
+  <data name="ClienteModificadoMessageSuccess" xml:space="preserve">
+    <value>Customer modified successfully</value>
+  </data>
+  <data name="ClientesSearchNotFound" xml:space="preserve">
+    <value>Customers not found with this term</value>
+  </data>
+  <data name="CrearAutorButton" xml:space="preserve">
+    <value>Create Author</value>
+  </data>
+  <data name="CrearAutorTitle" xml:space="preserve">
+    <value>Create Author</value>
+  </data>
+  <data name="CrearButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CrearCategoriaButton" xml:space="preserve">
+    <value>Create Category</value>
+  </data>
+  <data name="CrearCategoriaTitle" xml:space="preserve">
+    <value>Create Category</value>
+  </data>
+  <data name="CrearClienteButton" xml:space="preserve">
+    <value>Create Customer</value>
+  </data>
+  <data name="CrearClienteTitle" xml:space="preserve">
+    <value>Create Customer</value>
+  </data>
+  <data name="CrearLibroButton" xml:space="preserve">
+    <value>Create Book</value>
+  </data>
+  <data name="CrearLibroTitle" xml:space="preserve">
+    <value>Create Book</value>
+  </data>
+  <data name="CrearPrestamoButton" xml:space="preserve">
+    <value>Create Loan</value>
+  </data>
+  <data name="CrearPrestamoTitle" xml:space="preserve">
+    <value>Create Loan</value>
+  </data>
+  <data name="EliminarButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EliminarSelectedButton" xml:space="preserve">
+    <value>Delete selected</value>
+  </data>
+  <data name="ExisteAutorCategoriaCreate" xml:space="preserve">
+    <value>At least one author and one category must exist before creating a book</value>
+  </data>
+  <data name="ExisteAutorCategoriaEdit" xml:space="preserve">
+    <value>At least one author and one category must exist before editing a book</value>
+  </data>
+  <data name="ExisteLibroClienteCreate" xml:space="preserve">
+    <value>At least one book and one customer must exist before creating a loan</value>
+  </data>
+  <data name="ExisteLibroClienteEdit" xml:space="preserve">
+    <value>At least one book and one customer must exist before editing a loan</value>
+  </data>
+  <data name="LibroCreadoMessageSuccess" xml:space="preserve">
+    <value>Book created successfully</value>
+  </data>
+  <data name="LibroEliminadoMessageFail" xml:space="preserve">
+    <value>Error deleting books</value>
+  </data>
+  <data name="LibroEliminadoMessageSuccess" xml:space="preserve">
+    <value>Book deleted successfully</value>
+  </data>
+  <data name="LibroEliminadoMultipleMessageFail" xml:space="preserve">
+    <value>Error deleting multiple books</value>
+  </data>
+  <data name="LibroEliminadoMultipleMessageSuccess" xml:space="preserve">
+    <value>Books deleted successfully</value>
+  </data>
+  <data name="LibroModificadoMessageSuccess" xml:space="preserve">
+    <value>Book modified successfully</value>
+  </data>
+  <data name="LibrosSearchNotFound" xml:space="preserve">
+    <value>Books not found with this term</value>
+  </data>
+  <data name="ListaAutoresEmptyMessage" xml:space="preserve">
+    <value>Authors list is empty</value>
+  </data>
+  <data name="ListaAutoresTitle" xml:space="preserve">
+    <value>Authors List</value>
+  </data>
+  <data name="ListaCategoriasEmptyMessage" xml:space="preserve">
+    <value>Categories list is empty</value>
+  </data>
+  <data name="ListaCategoriasTitle" xml:space="preserve">
+    <value>Categories List</value>
+  </data>
+  <data name="ListaClientesEmptyMessage" xml:space="preserve">
+    <value>Customers list is empty</value>
+  </data>
+  <data name="ListaClientesTitle" xml:space="preserve">
+    <value>Customers List</value>
+  </data>
+  <data name="ListaLibrosEmptyMessage" xml:space="preserve">
+    <value>Books list is empty</value>
+  </data>
+  <data name="ListaLibrosTitle" xml:space="preserve">
+    <value>Books List</value>
+  </data>
+  <data name="ListaPrestamosEmptyMessage" xml:space="preserve">
+    <value>Loans list is empty</value>
+  </data>
+  <data name="ListaPrestamosTitle" xml:space="preserve">
+    <value>Loans List</value>
+  </data>
+  <data name="ModificarAutorTitle" xml:space="preserve">
+    <value>Edit Author</value>
+  </data>
+  <data name="ModificarButton" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ModificarCategoriaTitle" xml:space="preserve">
+    <value>Edit Category</value>
+  </data>
+  <data name="ModificarClienteTitle" xml:space="preserve">
+    <value>Edit Customer</value>
+  </data>
+  <data name="ModificarLibroTitle" xml:space="preserve">
+    <value>Edit Book</value>
+  </data>
+  <data name="ModificarPrestamoTitle" xml:space="preserve">
+    <value>Edit Loan</value>
+  </data>
+  <data name="PrestamoCreadoMessageSuccess" xml:space="preserve">
+    <value>Loan created successfully</value>
+  </data>
+  <data name="PrestamoEliminadoMessageSuccess" xml:space="preserve">
+    <value>Loan deleted successfully</value>
+  </data>
+  <data name="PrestamoModificadoMessageSuccess" xml:space="preserve">
+    <value>Loan modified successfully</value>
+  </data>
+  <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
+    <value>Loans deleted successfully</value>
+  </data>
+  <data name="PrestamosSearchNotFound" xml:space="preserve">
+    <value>Loans not found with this term</value>
+  </data>
+  <data name="VerAutorTitle" xml:space="preserve">
+    <value>Show Author</value>
+  </data>
+  <data name="VerButton" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="VerCategoriaTitle" xml:space="preserve">
+    <value>Show Category</value>
+  </data>
+  <data name="VerClienteTitle" xml:space="preserve">
+    <value>Show Customer</value>
+  </data>
+  <data name="VerLibroTitle" xml:space="preserve">
+    <value>Show Book</value>
+  </data>
+  <data name="VerPrestamoTitle" xml:space="preserve">
+    <value>Show Loan</value>
+  </data>
+  <data name="VolverButton" xml:space="preserve">
+    <value>Back</value>
+  </data>
+</root>

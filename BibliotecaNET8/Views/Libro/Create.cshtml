@@ -1,0 +1,41 @@
+﻿@model LibroCreateVM
+
+<h1 class="libro-title">@Localizer["CrearLibroTitle"]</h1>
+
+<form method="post" asp-route="libroCreate" enctype="multipart/form-data" class="mx-auto max-w-md">
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="Titulo" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" placeholder=" " required />
+        <label asp-for="Titulo" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">@Html.DisplayNameFor(model => model.Titulo)</label>
+        <span asp-validation-for="Titulo" class="text-red-600"></span>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="ISBN" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" placeholder=" " />
+        <label asp-for="ISBN" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            @Html.DisplayNameFor(model => model.ISBN)
+        </label>
+        <span asp-validation-for="ISBN" class="text-red-600"></span>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <input asp-for="FechaPublicacion" class="border-0 border-b-2 peer block w-full appearance-none border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-600" placeholder=" " required />
+        <label asp-for="FechaPublicacion" class="-translate-y-6 -z-10 origin-[0] absolute top-3 scale-75 transform text-sm text-gray-500 duration-300 peer-focus:font-medium peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">@Html.DisplayNameFor(model => model.FechaPublicacion)</label>
+        <span asp-validation-for="FechaPublicacion" class="text-red-600"></span>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <label asp-for="CategoriaId" class="mb-2 block text-sm font-medium text-gray-900">@Html.DisplayNameFor(model => model.CategoriaId)</label>
+        <select asp-for="CategoriaId" asp-items="Model.Categorias" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500"></select>
+        <span asp-validation-for="CategoriaId" class="text-red-600"></span>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <label asp-for="AutorId" class="mb-2 block text-sm font-medium text-gray-900">@Html.DisplayNameFor(model => model.AutorId)</label>
+        <select asp-for="AutorId" asp-items="Model.Autores" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500"></select>
+        <span asp-validation-for="AutorId" class="text-red-600"></span>
+    </div>
+    <div class="z-0 group relative mb-5 w-full">
+        <label asp-for="Imagen" class="mb-2 block text-sm font-medium text-gray-900">@Html.DisplayNameFor(model => model.Imagen)</label>
+        <input asp-for="Imagen" type="file" accept="image/*" class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-100 text-sm text-gray-900 focus:outline-none dark:text-gray-400" />
+        <span asp-validation-for="Imagen" class="text-red-600"></span>
+    </div>
+
+    <button type="submit" class="libro-btn libro-btn-info">@Localizer["CrearButton"]</button>
+    <a asp-route="libroIndex" class="libro-btn libro-btn-info">@Localizer["VolverButton"]</a>
+</form>

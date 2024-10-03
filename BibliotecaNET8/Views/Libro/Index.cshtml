@@ -1,0 +1,48 @@
+﻿@model PagedResult<LibroListVM>
+
+<h1 class="libro-title">@Localizer["ListaLibrosTitle"]</h1>
+
+<div class="mb-6 mt-8">
+    <a asp-route="libroCreate" class="libro-btn libro-btn-info">@Localizer["CrearLibroButton"]</a>
+</div>
+
+@if (TempData["LibroMensajes"] != null)
+{
+    <div class="libro-alert libro-alert-success" role="alert">
+        <span class="font-medium">@TempData["LibroMensajes"]</span>
+    </div>
+}
+
+@if (TempData["ExisteAutorCategoria"] != null)
+{
+    <div class="libro-alert libro-alert-info" role="alert">
+        <span class="font-medium">@TempData["ExisteAutorCategoria"]</span>
+    </div>
+}
+
+@if (ViewBag.ListaLibros != null)
+{
+    <div class="libro-alert libro-alert-info" role="alert">
+        <span class="font-medium">@ViewBag.ListaLibros</span>
+    </div>
+}
+else
+{
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="bg-white pb-4">
+            <label for="filterSearch" class="sr-only">Search</label>
+            <div class="mt-1 relative">
+                <div class="inset-y-0 start-0 ps-3 pointer-events-none absolute flex items-center">
+                    <svg class="h-4 w-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input type="text" name="filterSearch" onkeyup="Search('/Libro/Search');" class="w-80 border-gray-300 bg-gray-100 py-2 ps-10 text-gray-900 block rounded-lg border text-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+            </div>
+        </div>
+
+        <div id="dataBody">
+            @await Html.PartialAsync("_LibrosTabla", Model)
+        </div>
+    </div>
+}

@@ -1,0 +1,29 @@
+﻿@model object
+@{
+    dynamic genericModel = Model;
+}
+
+<!-- Enlaces de navegación -->
+<div class="pagination">
+    @if (genericModel.HasPreviousPage)
+    {
+        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber - 1)" asp-route-pageSize="@genericModel.PageSize">Anterior</a>
+    }
+
+    @for (int i = 1; i <= genericModel.TotalPages; i++)
+    {
+        if (i == genericModel.PageNumber)
+        {
+            <span class="current-page">@i</span>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@i" asp-route-pageSize="@genericModel.PageSize">@i</a>
+        }
+    }
+
+    @if (genericModel.HasNextPage)
+    {
+        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber + 1)" asp-route-pageSize="@genericModel.PageSize">Siguiente</a>
+    }
+</div>
