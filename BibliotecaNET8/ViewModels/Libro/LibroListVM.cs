@@ -8,15 +8,12 @@ public class LibroListVM
     public int Id { get; set; }
 
     [DisplayName("Título")]
-    //[Required(ErrorMessageResourceType = typeof(Resources.ValidationMessages), ErrorMessageResourceName = "LibroTituloRequired")]
-    //[StringLength(150, ErrorMessageResourceType = typeof(Resources.ValidationMessages), ErrorMessageResourceName = "LibroTituloStringLength")]
     public string Titulo { get; set; }
 
-    //[StringLength(13, ErrorMessageResourceType = typeof(Resources.ValidationMessages), ErrorMessageResourceName = "LibroISBNStringLength")]
     public string? ISBN { get; set; }
 
     [DisplayName("Fecha de Publicación")]
-    //[DataType(DataType.Date)]
+    [DataType(DataType.Date)]
     public DateTime FechaPublicacion { get; set; } = DateTime.Now;
 
     public byte[]? Imagen { get; set; }

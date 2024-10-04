@@ -31,11 +31,11 @@ public class AutorController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
+        IQueryable<Autor> autores = await _autorService.GetAllAutores();
+        PagedResult<AutorVM> autoresPagedVM = new();
+
         term = term?.ToLower().Trim();
         ViewData["CurrentSearchTerm"] = term;
-
-        PagedResult<AutorVM> autoresPagedVM = new();
-        IQueryable<Autor> autores = await _autorService.GetAllAutores();
         if (!string.IsNullOrEmpty(term))
         {
             autores = _autorService.SearchAutor(autores, autor =>
@@ -50,21 +50,7 @@ public class AutorController : Controller
         else
         {
             PagedResult<Autor> pagedResult = await _autorService.GetRecordsPagedResult(autores, pageNumber, pageSize);
-
-            autoresPagedVM = new PagedResult<AutorVM>
-            {
-                PageNumber = pagedResult.PageNumber,
-                PageSize = pagedResult.PageSize,
-                TotalItems = pagedResult.TotalItems,
-                TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pagedResult.PageSize),
-                Items = pagedResult.Items.Select(autor => new AutorVM
-                {
-                    Id = autor.Id,
-                    Nombre = autor.Nombre,
-                    Apellido = autor.Apellido,
-                    FechaNacimiento = autor.FechaNacimiento
-                }).ToList()
-            };
+            autoresPagedVM = _mapper.Map<PagedResult<Autor>, PagedResult<AutorVM>>(pagedResult);
         }
 
         return View(autoresPagedVM);
@@ -222,21 +208,7 @@ public class AutorController : Controller
         }
 
         PagedResult<Autor> pagedResult = await _autorService.GetRecordsPagedResult(filtroAutores, pageNumber, pageSize);
-
-        PagedResult<AutorVM> autoresPagedVM = new()
-        {
-            PageNumber = pagedResult.PageNumber,
-            PageSize = pagedResult.PageSize,
-            TotalItems = pagedResult.TotalItems,
-            TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-            Items = pagedResult.Items.Select(autor => new AutorVM
-            {
-                Id = autor.Id,
-                Nombre = autor.Nombre,
-                Apellido = autor.Apellido,
-                FechaNacimiento = autor.FechaNacimiento
-            }).ToList()
-        };
+        PagedResult<AutorVM> autoresPagedVM = _mapper.Map<PagedResult<Autor>, PagedResult<AutorVM>>(pagedResult);
 
         return PartialView("_AutoresTabla", autoresPagedVM);
     }

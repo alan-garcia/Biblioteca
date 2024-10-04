@@ -6,8 +6,8 @@ public class Categoria : BaseEntity
 {
     public int Id { get; set; }
 
-    //[Required]
-    //[StringLength(100)]
+    [Required]
+    [StringLength(100)]
     public string Nombre { get; set; }
 
     public virtual ICollection<Libro> Libros { get; set; }

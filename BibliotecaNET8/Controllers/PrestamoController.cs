@@ -7,10 +7,10 @@ using BibliotecaNET8.Services;
 using BibliotecaNET8.Utils;
 using BibliotecaNET8.ViewModels;
 using BibliotecaNET8.ViewModels.Prestamo;
-using BibliotecaNET8.ViewModels.Libro;
 using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.AspNetCore;
+using BibliotecaNET8.ViewModels.Libro;
 
 namespace BibliotecaNET8.Controllers;
 
@@ -38,11 +38,11 @@ public class PrestamoController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
+        IQueryable<Prestamo> prestamos = _prestamoService.GetPrestamosConLibrosClientes();
+        PagedResult<PrestamoListVM> prestamosPagedVM = new();
+
         term = term?.ToLower().Trim();
         ViewData["CurrentSearchTerm"] = term;
-
-        PagedResult<PrestamoListVM> prestamosVM = new();
-        IQueryable<Prestamo> prestamos = _prestamoService.GetPrestamosConLibrosClientes();
         if (!string.IsNullOrEmpty(term))
         {
             prestamos = _prestamoService.SearchPrestamo(prestamos, prestamo =>
@@ -58,40 +58,10 @@ public class PrestamoController : Controller
         else
         {
             PagedResult<Prestamo> pagedResult = await _prestamoService.GetRecordsPagedResult(prestamos, pageNumber, pageSize);
-
-            prestamosVM = new PagedResult<PrestamoListVM>
-            {
-                PageNumber = pagedResult.PageNumber,
-                PageSize = pagedResult.PageSize,
-                TotalItems = pagedResult.TotalItems,
-                TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-                Items = pagedResult.Items.Select(prestamo => new PrestamoListVM
-                {
-                    FechaPrestamo = prestamo.FechaPrestamo,
-                    FechaDevolucion = prestamo.FechaDevolucion,
-                    Cliente = new Cliente
-                    {
-                        Id = prestamo.Cliente.Id,
-                        Nombre = prestamo.Cliente.Nombre,
-                        Apellido = prestamo.Cliente.Apellido,
-                        Email = prestamo.Cliente.Email,
-                        Telefono = prestamo.Cliente.Telefono
-                    },
-                    Libro = new Libro
-                    {
-                        Id = prestamo.Libro.Id,
-                        Titulo = prestamo.Libro.Titulo,
-                        ISBN = prestamo.Libro.ISBN,
-                        FechaPublicacion = prestamo.Libro.FechaPublicacion
-                    },
-                    Id = prestamo.Id,
-                    ClienteId = prestamo.ClienteId,
-                    LibroId = prestamo.LibroId
-                }).ToList()
-            };
+            prestamosPagedVM = _mapper.Map<PagedResult<Prestamo>, PagedResult<PrestamoListVM>>(pagedResult);
         }
 
-        return View(prestamosVM);
+        return View(prestamosPagedVM);
     }
 
     [HttpGet]
@@ -279,23 +249,7 @@ public class PrestamoController : Controller
         }
 
         PagedResult<Prestamo> pagedResult = await _prestamoService.GetRecordsPagedResult(filtroPrestamosSearch, pageNumber, pageSize);
-
-        PagedResult<PrestamoListVM> prestamosPagedVM = new()
-        {
-            PageNumber = pagedResult.PageNumber,
-            PageSize = pagedResult.PageSize,
-            TotalItems = pagedResult.TotalItems,
-            TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-            Items = pagedResult.Items.Select(prestamo => new PrestamoListVM
-            {
-                FechaPrestamo = prestamo.FechaPrestamo,
-                FechaDevolucion = prestamo.FechaDevolucion,
-                ClienteId = prestamo.ClienteId,
-                LibroId = prestamo.LibroId,
-                Cliente = prestamo.Cliente,
-                Libro = prestamo.Libro
-            }).ToList()
-        };
+        PagedResult<PrestamoListVM> prestamosPagedVM = _mapper.Map<PagedResult<Prestamo>, PagedResult<PrestamoListVM>>(pagedResult);
 
         return PartialView("_PrestamosTabla", prestamosPagedVM);
     }

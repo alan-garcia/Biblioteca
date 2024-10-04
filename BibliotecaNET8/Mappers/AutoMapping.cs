@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BibliotecaNET8.Models;
+using BibliotecaNET8.ViewModels;
 using BibliotecaNET8.ViewModels.Autor;
 using BibliotecaNET8.ViewModels.Categoria;
 using BibliotecaNET8.ViewModels.Cliente;
@@ -15,11 +16,17 @@ public class AutoMapping : Profile
         CreateMap<Autor, AutorVM>().ReverseMap();
         CreateMap<Categoria, CategoriaVM>().ReverseMap();
         CreateMap<Cliente, ClienteVM>().ReverseMap();
-
+        CreateMap<Libro, LibroListVM>().ReverseMap();
         CreateMap<Libro, LibroCreateVM>()
             .ReverseMap()
             .ForMember(dest => dest.Imagen, opt => opt.Condition(src => src.Imagen != null));
-
         CreateMap<Prestamo, PrestamoCreateVM>().ReverseMap();
+        CreateMap<Prestamo, PrestamoListVM>().ReverseMap();
+
+        CreateMap<PagedResult<Autor>, PagedResult<AutorVM>>().ReverseMap();
+        CreateMap<PagedResult<Categoria>, PagedResult<CategoriaVM>>().ReverseMap();
+        CreateMap<PagedResult<Cliente>, PagedResult<ClienteVM>>().ReverseMap();
+        CreateMap<PagedResult<Libro>, PagedResult<LibroListVM>>().ReverseMap();
+        CreateMap<PagedResult<Prestamo>, PagedResult<PrestamoListVM>>().ReverseMap();
     }
 }

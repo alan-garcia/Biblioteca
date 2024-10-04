@@ -36,11 +36,11 @@ public class LibroController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
+        IQueryable<Libro> libros = _libroService.GetLibrosConAutoresCategorias();
+        PagedResult<LibroListVM> librosPagedVM = new();
+        
         term = term?.ToLower().Trim();
         ViewData["CurrentSearchTerm"] = term;
-
-        PagedResult<LibroListVM> librosPagedVM = new();
-        IQueryable<Libro> libros = _libroService.GetLibrosConAutoresCategorias();
         if (!string.IsNullOrEmpty(term))
         {
             libros = _libroService.SearchLibro(libros, libro =>
@@ -55,29 +55,7 @@ public class LibroController : Controller
         else
         {
             PagedResult<Libro> pagedResult = await _libroService.GetRecordsPagedResult(libros, pageNumber, pageSize);
-
-            librosPagedVM = new PagedResult<LibroListVM>
-            {
-                PageNumber = pagedResult.PageNumber,
-                PageSize = pagedResult.PageSize,
-                TotalItems = pagedResult.TotalItems,
-                TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-                Items = pagedResult.Items.Select(libro => new LibroListVM
-                {
-                    Titulo = libro.Titulo,
-                    FechaPublicacion = libro.FechaPublicacion,
-                    ISBN = libro.ISBN,
-                    Autor = new Autor
-                    {
-                        Id = libro.Autor.Id,
-                        Nombre = libro.Autor.Nombre,
-                        Apellido = libro.Autor.Apellido,
-                        FechaNacimiento = libro.Autor.FechaNacimiento
-                    },
-                    Categoria = libro.Categoria,
-                    Id = libro.Id
-                }).ToList()
-            };
+            librosPagedVM = _mapper.Map<PagedResult<Libro>, PagedResult<LibroListVM>>(pagedResult);
         }
 
         return View(librosPagedVM);
@@ -302,25 +280,7 @@ public class LibroController : Controller
         }
 
         PagedResult<Libro> pagedResult = await _libroService.GetRecordsPagedResult(filtroLibrosSearch, pageNumber, pageSize);
-
-        PagedResult<LibroListVM> librosPagedVM = new()
-        {
-            PageNumber = pagedResult.PageNumber,
-            PageSize = pagedResult.PageSize,
-            TotalItems = pagedResult.TotalItems,
-            TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-            Items = pagedResult.Items.Select(libro => new LibroListVM
-            {
-                Id = libro.Id,
-                Titulo = libro.Titulo,
-                FechaPublicacion = libro.FechaPublicacion,
-                ISBN = libro.ISBN,
-                AutorId = libro.AutorId,
-                CategoriaId = libro.CategoriaId,
-                Autor = libro.Autor,
-                Categoria = libro.Categoria,
-            }).ToList()
-        };
+        PagedResult<LibroListVM> librosPagedVM = _mapper.Map<PagedResult<Libro>, PagedResult<LibroListVM>>(pagedResult);
 
         return PartialView("_LibrosTabla", librosPagedVM);
     }

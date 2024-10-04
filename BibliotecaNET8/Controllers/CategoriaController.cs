@@ -9,7 +9,7 @@ using BibliotecaNET8.Services;
 using BibliotecaNET8.Utils;
 using BibliotecaNET8.ViewModels;
 using BibliotecaNET8.ViewModels.Categoria;
-using BibliotecaNET8.Resources;
+using BibliotecaNET8.ViewModels.Autor;
 
 namespace BibliotecaNET8.Controllers;
 
@@ -32,11 +32,11 @@ public class CategoriaController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
+        IQueryable<Categoria> categorias = await _categoriaService.GetAllCategorias();
+        PagedResult<CategoriaVM> categoriasPagedVM = new();
+        
         term = term?.ToLower().Trim();
         ViewData["CurrentSearchTerm"] = term;
-
-        PagedResult<CategoriaVM> categoriasPagedVM = new();
-        IQueryable<Categoria> categorias = await _categoriaService.GetAllCategorias();
         if (!string.IsNullOrEmpty(term))
         {
             categorias = _categoriaService.SearchCategoria(categorias, categoria =>
@@ -50,19 +50,7 @@ public class CategoriaController : Controller
         else
         {
             PagedResult<Categoria> pagedResult = await _categoriaService.GetRecordsPagedResult(categorias, pageNumber, pageSize);
-
-            categoriasPagedVM = new PagedResult<CategoriaVM>
-            {
-                PageNumber = pagedResult.PageNumber,
-                PageSize = pagedResult.PageSize,
-                TotalItems = pagedResult.TotalItems,
-                TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-                Items = pagedResult.Items.Select(categoria => new CategoriaVM
-                {
-                    Id = categoria.Id,
-                    Nombre = categoria.Nombre
-                }).ToList()
-            };
+            categoriasPagedVM = _mapper.Map<PagedResult<Categoria>, PagedResult<CategoriaVM>>(pagedResult);
         }
 
         return View(categoriasPagedVM);
@@ -219,19 +207,7 @@ public class CategoriaController : Controller
         }
 
         PagedResult<Categoria> pagedResult = await _categoriaService.GetRecordsPagedResult(filtroCategorias, pageNumber, pageSize);
-
-        PagedResult<CategoriaVM> categoriasPagedVM = new()
-        {
-            PageNumber = pagedResult.PageNumber,
-            PageSize = pagedResult.PageSize,
-            TotalItems = pagedResult.TotalItems,
-            TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-            Items = pagedResult.Items.Select(categoria => new CategoriaVM
-            {
-                Id = categoria.Id,
-                Nombre = categoria.Nombre
-            }).ToList()
-        };
+        PagedResult<CategoriaVM> categoriasPagedVM = _mapper.Map<PagedResult<Categoria>, PagedResult<CategoriaVM>>(pagedResult);
 
         return PartialView("_CategoriasTabla", categoriasPagedVM);
     }

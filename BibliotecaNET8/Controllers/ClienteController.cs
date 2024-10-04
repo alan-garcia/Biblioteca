@@ -8,8 +8,8 @@ using BibliotecaNET8.Utils;
 using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.AspNetCore;
-using BibliotecaNET8.Resources;
 using BibliotecaNET8.Models;
+using BibliotecaNET8.ViewModels.Categoria;
 
 namespace BibliotecaNET8.Controllers;
 
@@ -32,11 +32,11 @@ public class ClienteController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
+        IQueryable<Cliente> clientes = await _clienteService.GetAllClientes();
+        PagedResult<ClienteVM> clientesPagedVM = new();
+        
         term = term?.ToLower().Trim();
         ViewData["CurrentSearchTerm"] = term;
-
-        PagedResult<ClienteVM> clientesPagedVM = new();
-        IQueryable<Cliente> clientes = await _clienteService.GetAllClientes();
         if (!string.IsNullOrEmpty(term))
         {
             clientes = _clienteService.SearchCliente(clientes, cliente =>
@@ -53,22 +53,7 @@ public class ClienteController : Controller
         else
         {
             PagedResult<Cliente> pagedResult = await _clienteService.GetRecordsPagedResult(clientes, pageNumber, pageSize);
-
-            clientesPagedVM = new PagedResult<ClienteVM>
-            {
-                PageNumber = pagedResult.PageNumber,
-                PageSize = pagedResult.PageSize,
-                TotalItems = pagedResult.TotalItems,
-                TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-                Items = pagedResult.Items.Select(cliente => new ClienteVM
-                {
-                    Id = cliente.Id,
-                    Nombre = cliente.Nombre,
-                    Apellido = cliente.Apellido,
-                    Email = cliente.Email,
-                    Telefono = cliente.Telefono
-                }).ToList()
-            };
+            clientesPagedVM = _mapper.Map<PagedResult<Cliente>, PagedResult<ClienteVM>>(pagedResult);
         }
 
         return View(clientesPagedVM);
@@ -228,22 +213,7 @@ public class ClienteController : Controller
         }
 
         PagedResult<Cliente> pagedResult = await _clienteService.GetRecordsPagedResult(filtroClientes, pageNumber, pageSize);
-
-        PagedResult<ClienteVM> clientesPagedVM = new()
-        {
-            PageNumber = pagedResult.PageNumber,
-            PageSize = pagedResult.PageSize,
-            TotalItems = pagedResult.TotalItems,
-            TotalPages = (int)Math.Ceiling(pagedResult.TotalItems / (double)pageSize),
-            Items = pagedResult.Items.Select(cliente => new ClienteVM
-            {
-                Id = cliente.Id,
-                Nombre = cliente.Nombre,
-                Apellido = cliente.Apellido,
-                Email = cliente.Email,
-                Telefono = cliente.Telefono
-            }).ToList()
-        };
+        PagedResult<ClienteVM> clientesPagedVM = _mapper.Map<PagedResult<Cliente>, PagedResult<ClienteVM>>(pagedResult);
 
         return PartialView("_ClientesTabla", clientesPagedVM);
     }
