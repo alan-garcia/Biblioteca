@@ -133,6 +133,15 @@ namespace BibliotecaNET8.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Buscar por nombre, o apellidos.
+        /// </summary>
+        public static string AutorSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("AutorSearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Categoría creada correctamente.
         /// </summary>
         public static string CategoriaCreadaMessageSuccess {
@@ -183,6 +192,15 @@ namespace BibliotecaNET8.Resources {
         public static string CategoriaModificadaMessageSuccess {
             get {
                 return ResourceManager.GetString("CategoriaModificadaMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar por nombre de categoría.
+        /// </summary>
+        public static string CategoriaSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("CategoriaSearchPlaceholder", resourceCulture);
             }
         }
         
@@ -246,6 +264,15 @@ namespace BibliotecaNET8.Resources {
         public static string ClienteModificadoMessageSuccess {
             get {
                 return ResourceManager.GetString("ClienteModificadoMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar por nombre, teléfono, o email.
+        /// </summary>
+        public static string ClienteSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("ClienteSearchPlaceholder", resourceCulture);
             }
         }
         
@@ -466,6 +493,15 @@ namespace BibliotecaNET8.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Buscar por título, o ISBN.
+        /// </summary>
+        public static string LibroSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("LibroSearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No existen libros con este criterio.
         /// </summary>
         public static string LibrosSearchNotFound {
@@ -642,6 +678,15 @@ namespace BibliotecaNET8.Resources {
         public static string PrestamoModificadoMessageSuccess {
             get {
                 return ResourceManager.GetString("PrestamoModificadoMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Buscar por nombre o apellido del cliente, o por título de libro.
+        /// </summary>
+        public static string PrestamoSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("PrestamoSearchPlaceholder", resourceCulture);
             }
         }
         

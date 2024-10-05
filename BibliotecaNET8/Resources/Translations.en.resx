@@ -141,6 +141,9 @@
   <data name="AutorModificadoMessageSuccess" xml:space="preserve">
     <value>Author modified successfully</value>
   </data>
+  <data name="AutorSearchPlaceholder" xml:space="preserve">
+    <value>Search for name, or lastname</value>
+  </data>
   <data name="CategoriaCreadaMessageSuccess" xml:space="preserve">
     <value>Category created successfully</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="CategoriaModificadaMessageSuccess" xml:space="preserve">
     <value>Category modified successfully</value>
+  </data>
+  <data name="CategoriaSearchPlaceholder" xml:space="preserve">
+    <value>Search for category name</value>
   </data>
   <data name="CategoriasSearchNotFound" xml:space="preserve">
     <value>Categories not found with this term</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="ClienteModificadoMessageSuccess" xml:space="preserve">
     <value>Customer modified successfully</value>
+  </data>
+  <data name="ClienteSearchPlaceholder" xml:space="preserve">
+    <value>Search for name, phone, or email</value>
   </data>
   <data name="ClientesSearchNotFound" xml:space="preserve">
     <value>Customers not found with this term</value>
@@ -252,6 +261,9 @@
   <data name="LibroModificadoMessageSuccess" xml:space="preserve">
     <value>Book modified successfully</value>
   </data>
+  <data name="LibroSearchPlaceholder" xml:space="preserve">
+    <value>Search for title, or ISBN</value>
+  </data>
   <data name="LibrosSearchNotFound" xml:space="preserve">
     <value>Books not found with this term</value>
   </data>
@@ -311,6 +323,9 @@
   </data>
   <data name="PrestamoModificadoMessageSuccess" xml:space="preserve">
     <value>Loan modified successfully</value>
+  </data>
+  <data name="PrestamoSearchPlaceholder" xml:space="preserve">
+    <value>Search for name or lastname's customer, or by book title</value>
   </data>
   <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Loans deleted successfully</value>

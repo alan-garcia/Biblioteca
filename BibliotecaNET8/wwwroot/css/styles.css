@@ -1,3 +1,8 @@
+svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .pagination {
     display: flex;
     gap: 0.4rem;

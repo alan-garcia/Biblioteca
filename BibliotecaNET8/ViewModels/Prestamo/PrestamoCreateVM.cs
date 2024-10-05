@@ -14,7 +14,7 @@ public class PrestamoCreateVM
 
     [DisplayName("Fecha Devolución")]
     [DataType(DataType.Date)]
-    public DateTime? FechaDevolucion { get; set; }
+    public DateTime? FechaDevolucion { get; set; } = DateTime.Now;
 
     [DisplayName("Libro")]
     public int LibroId { get; set; }

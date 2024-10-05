@@ -141,6 +141,9 @@
   <data name="AutorModificadoMessageSuccess" xml:space="preserve">
     <value>Autor modificado correctamente</value>
   </data>
+  <data name="AutorSearchPlaceholder" xml:space="preserve">
+    <value>Buscar por nombre, o apellidos</value>
+  </data>
   <data name="CategoriaCreadaMessageSuccess" xml:space="preserve">
     <value>Categoría creada correctamente</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="CategoriaModificadaMessageSuccess" xml:space="preserve">
     <value>Categoría modificada correctamente</value>
+  </data>
+  <data name="CategoriaSearchPlaceholder" xml:space="preserve">
+    <value>Buscar por nombre de categoría</value>
   </data>
   <data name="CategoriasSearchNotFound" xml:space="preserve">
     <value>No existen categorías con este criterio</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="ClienteModificadoMessageSuccess" xml:space="preserve">
     <value>Cliente modificado correctamente</value>
+  </data>
+  <data name="ClienteSearchPlaceholder" xml:space="preserve">
+    <value>Buscar por nombre, teléfono, o email</value>
   </data>
   <data name="ClientesSearchNotFound" xml:space="preserve">
     <value>No existen clientes con este criterio</value>
@@ -252,6 +261,9 @@
   <data name="LibroModificadoMessageSuccess" xml:space="preserve">
     <value>Libro modificado correctamente</value>
   </data>
+  <data name="LibroSearchPlaceholder" xml:space="preserve">
+    <value>Buscar por título, o ISBN</value>
+  </data>
   <data name="LibrosSearchNotFound" xml:space="preserve">
     <value>No existen libros con este criterio</value>
   </data>
@@ -311,6 +323,9 @@
   </data>
   <data name="PrestamoModificadoMessageSuccess" xml:space="preserve">
     <value>Préstamo modificado correctamente</value>
+  </data>
+  <data name="PrestamoSearchPlaceholder" xml:space="preserve">
+    <value>Buscar por nombre o apellido del cliente, o por título de libro</value>
   </data>
   <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Préstamos eliminados correctamente</value>

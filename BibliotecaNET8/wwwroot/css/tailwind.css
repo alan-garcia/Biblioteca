@@ -2,42 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-.libro-title {
+.bbtc-title {
     @apply my-4 text-center text-3xl;
 }
 
-.libro-btn {
-    @apply px-5 py-2.5 rounded-lg text-center text-sm font-medium focus:ring-4 focus:outline-none;
+.bbtc-btn {
+    @apply rounded-lg px-4 py-2.5 text-center text-sm font-medium focus:ring-4 focus:outline-none;
 }
 
-.libro-btn-info {
+.bbtc-btn-info {
     @apply bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-300;
 }
 
-.libro-btn-edit {
-    @apply bg-yellow-400 text-white hover:bg-yellow-500 focus:ring-yellow-300;
+.bbtc-btn-alternative {
+    @apply mb-2 me-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:z-10 focus:ring-4 focus:ring-gray-100;
 }
 
-.libro-btn-delete {
-    @apply bg-red-700 text-white hover:bg-red-800 focus:ring-red-300;
+.bbtc-btn-light {
+    @apply mb-2 me-2 border border-gray-300 bg-white text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100;
 }
 
-.libro-checkbox-input {
-    @apply h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 rounded focus:ring-blue-500 focus:ring-2;
+.bbtc-btn-delete {
+    @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-300;
 }
 
-.libro-alert {
-    @apply mb-4 p-4 rounded-lg text-sm;
+.bbtc-btn-delete-outline {
+    @apply mb-2 me-2 border border-red-400 text-red-400 hover:text-white hover:bg-red-600 focus:ring-red-300;
 }
 
-.libro-alert-success {
+.bbtc-checkbox-input {
+    @apply h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 focus:ring-2;
+}
+
+.bbtc-alert {
+    @apply mb-4 rounded-lg p-4 text-sm;
+}
+
+.bbtc-alert-success {
     @apply bg-green-100 text-green-800;
 }
 
-.libro-alert-info {
+.bbtc-alert-info {
     @apply bg-blue-100 text-blue-800;
 }
 
-.libro-table-row-content {
-    @apply px-6 py-4 text-gray-900 whitespace-nowrap font-medium;
+.bbtc-table-row-content {
+    @apply whitespace-nowrap px-6 py-4 font-medium text-gray-900;
+}
+
+.bbtc-search-filter-input {
+    @apply block w-80 rounded-lg border border-gray-300 bg-gray-100 py-2 ps-10 text-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500;
 }

@@ -2,21 +2,20 @@
 
 @if (!Model.Items.Any())
 {
-    <div class="libro-alert libro-alert-info" role="alert">
+    <div class="bbtc-alert bbtc-alert-info" role="alert">
         <span class="font-medium">@Localizer["PrestamosSearchNotFound"]</span>
     </div>
 }
 else
 {
-    <!-- Enlaces de navegación -->
     @await Html.PartialAsync("_Pagination", Model)
 
-    <table class="text-gray-500 w-full text-left text-sm">
-        <thead class="bg-gray-100 text-gray-700 text-xs">
+    <table class="w-full text-left text-sm text-gray-500">
+        <thead class="bg-gray-200 text-xs text-gray-700">
             <tr>
                 <th scope="col" class="p-4">
                     <div class="flex items-center">
-                        <input name="allIdsLibro" type="checkbox" class="libro-checkbox-input">
+                        <input name="allIdsLibro" type="checkbox" class="bbtccheckbox-input">
                         <label for="checkbox-all-search" class="sr-only">checkbox</label>
                     </div>
                 </th>
@@ -30,21 +29,28 @@ else
         <tbody>
             @foreach (var prestamo in Model.Items)
             {
-                <tr class="bg-white border-b">
+                <tr class="border-b bg-white">
                     <td class="w-4 p-4">
                         <div class="flex items-center">
-                            <input name="idsPrestamo" type="checkbox" value="@prestamo.Id" class="libro-checkbox-input">
+                            <input name="idsPrestamo" type="checkbox" value="@prestamo.Id" class="bbtccheckbox-input">
                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                         </div>
                     </td>
-                    <td scope="row" class="libro-table-row-content">@prestamo.FechaPrestamo.ToShortDateString()</td>
-                    <td scope="row" class="libro-table-row-content">@prestamo.FechaDevolucion.Value.ToShortDateString()</td>
-                    <td scope="row" class="libro-table-row-content">@($"{prestamo.Cliente.Nombre} {prestamo.Cliente.Apellido}")</td>
-                    <td scope="row" class="libro-table-row-content">@prestamo.Libro.Titulo</td>
+                    <td scope="row" class="bbtctable-row-content">@prestamo.FechaPrestamo.ToShortDateString()</td>
+                    <td scope="row" class="bbtctable-row-content">@prestamo.FechaDevolucion.Value.ToShortDateString()</td>
+                    <td scope="row" class="bbtctable-row-content">@($"{prestamo.Cliente.Nombre} {prestamo.Cliente.Apellido}")</td>
+                    <td scope="row" class="bbtctable-row-content">@prestamo.Libro.Titulo</td>
                     <td class="px-6 py-4">
-                        <a asp-route="prestamoVer" asp-route-id="@prestamo.Id" class="libro-btn libro-btn-info">@Localizer["VerButton"]</a>
-                        <a asp-route="prestamoEdit" asp-route-id="@prestamo.Id" class="libro-btn libro-btn-edit">@Localizer["ModificarButton"]</a>
-                        <a asp-route="prestamoDelete" asp-route-id="@prestamo.Id" onclick="Eliminar(this.href); return false;" class="libro-btn libro-btn-delete cursor-pointer">@Localizer["EliminarButton"]</a>
+                        <a asp-route="prestamoVer" asp-route-id="@prestamo.Id" class="bbtc-btn bbtc-btn-alternative mr-2">
+                            <icon href="view-icon" class="size-6"></icon> @Localizer["VerButton"]
+                        </a>
+                        <a asp-route="prestamoEdit" asp-route-id="@prestamo.Id" class="bbtc-btn bbtc-btn-info mr-2">
+                            <icon href="edit-icon" class="size-6"></icon> @Localizer["ModificarButton"]
+                        </a>
+                        <a asp-route="prestamoDelete" asp-route-id="@prestamo.Id" onclick="Eliminar(this.href); return false;"
+                            class="bbtc-btn bbtc-btn-delete-outline mr-2">
+                            <icon href="delete-icon" class="size-6"></icon> @Localizer["EliminarButton"]
+                        </a>
                     </td>
                 </tr>
             }
@@ -52,6 +58,9 @@ else
     </table>
 
     <div class="my-4">
-        <a asp-route="prestamoDeleteMultiple" onclick="EliminarSeleccionados(this.href); return false;" class="libro-btn libro-btn-delete">@Localizer["EliminarSelectedButton"]</a>
+        <a asp-route="prestamoDeleteMultiple" onclick="EliminarSeleccionados(this.href); return false;"
+           class="bbtc-btn bbtc-btn-delete-outline ml-2">
+            <icon href="delete-icon" class="size-6"></icon> @Localizer["EliminarSelectedButton"]
+        </a>
     </div>
 }

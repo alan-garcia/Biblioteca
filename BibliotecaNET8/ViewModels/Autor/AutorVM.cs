@@ -11,5 +11,5 @@ public class AutorVM
 
     [DisplayName("Fecha de Nacimiento")]
     [DataType(DataType.Date)]
-    public DateTime FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; } = DateTime.Now;
 }
