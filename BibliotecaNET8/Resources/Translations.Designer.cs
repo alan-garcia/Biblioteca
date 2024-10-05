@@ -115,6 +115,15 @@ namespace BibliotecaNET8.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Autores.
+        /// </summary>
+        public static string AutoresMenuOption {
+            get {
+                return ResourceManager.GetString("AutoresMenuOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No existen autores con este criterio.
         /// </summary>
         public static string AutoresSearchNotFound {
@@ -205,6 +214,15 @@ namespace BibliotecaNET8.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Categorias.
+        /// </summary>
+        public static string CategoriasMenuOption {
+            get {
+                return ResourceManager.GetString("CategoriasMenuOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No existen categorías con este criterio.
         /// </summary>
         public static string CategoriasSearchNotFound {
@@ -273,6 +291,15 @@ namespace BibliotecaNET8.Resources {
         public static string ClienteSearchPlaceholder {
             get {
                 return ResourceManager.GetString("ClienteSearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Clientes.
+        /// </summary>
+        public static string ClientesMenuOption {
+            get {
+                return ResourceManager.GetString("ClientesMenuOption", resourceCulture);
             }
         }
         
@@ -439,6 +466,24 @@ namespace BibliotecaNET8.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Idiomas.
+        /// </summary>
+        public static string IdiomasMenuOption {
+            get {
+                return ResourceManager.GetString("IdiomasMenuOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Inicio.
+        /// </summary>
+        public static string InicioMenuOption {
+            get {
+                return ResourceManager.GetString("InicioMenuOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Libro creado correctamente.
         /// </summary>
         public static string LibroCreadoMessageSuccess {
@@ -498,6 +543,15 @@ namespace BibliotecaNET8.Resources {
         public static string LibroSearchPlaceholder {
             get {
                 return ResourceManager.GetString("LibroSearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Libros.
+        /// </summary>
+        public static string LibrosMenuOption {
+            get {
+                return ResourceManager.GetString("LibrosMenuOption", resourceCulture);
             }
         }
         
@@ -696,6 +750,15 @@ namespace BibliotecaNET8.Resources {
         public static string PrestamosEliminadoMultipleMessageSuccess {
             get {
                 return ResourceManager.GetString("PrestamosEliminadoMultipleMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Préstamos.
+        /// </summary>
+        public static string PrestamosMenuOption {
+            get {
+                return ResourceManager.GetString("PrestamosMenuOption", resourceCulture);
             }
         }
         

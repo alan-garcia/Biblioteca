@@ -135,6 +135,9 @@
   <data name="AutorEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Autores eliminados correctamente</value>
   </data>
+  <data name="AutoresMenuOption" xml:space="preserve">
+    <value>Autores</value>
+  </data>
   <data name="AutoresSearchNotFound" xml:space="preserve">
     <value>No existen autores con este criterio</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="CategoriaSearchPlaceholder" xml:space="preserve">
     <value>Buscar por nombre de categoría</value>
   </data>
+  <data name="CategoriasMenuOption" xml:space="preserve">
+    <value>Categorias</value>
+  </data>
   <data name="CategoriasSearchNotFound" xml:space="preserve">
     <value>No existen categorías con este criterio</value>
   </data>
@@ -188,6 +194,9 @@
   </data>
   <data name="ClienteSearchPlaceholder" xml:space="preserve">
     <value>Buscar por nombre, teléfono, o email</value>
+  </data>
+  <data name="ClientesMenuOption" xml:space="preserve">
+    <value>Clientes</value>
   </data>
   <data name="ClientesSearchNotFound" xml:space="preserve">
     <value>No existen clientes con este criterio</value>
@@ -243,6 +252,12 @@
   <data name="ExisteLibroClienteEdit" xml:space="preserve">
     <value>Debe existir al menos un libro y un cliente antes de modificar un préstamo</value>
   </data>
+  <data name="IdiomasMenuOption" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="InicioMenuOption" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
   <data name="LibroCreadoMessageSuccess" xml:space="preserve">
     <value>Libro creado correctamente</value>
   </data>
@@ -263,6 +278,9 @@
   </data>
   <data name="LibroSearchPlaceholder" xml:space="preserve">
     <value>Buscar por título, o ISBN</value>
+  </data>
+  <data name="LibrosMenuOption" xml:space="preserve">
+    <value>Libros</value>
   </data>
   <data name="LibrosSearchNotFound" xml:space="preserve">
     <value>No existen libros con este criterio</value>
@@ -329,6 +347,9 @@
   </data>
   <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Préstamos eliminados correctamente</value>
+  </data>
+  <data name="PrestamosMenuOption" xml:space="preserve">
+    <value>Préstamos</value>
   </data>
   <data name="PrestamosSearchNotFound" xml:space="preserve">
     <value>No existen préstamos con este criterio</value>

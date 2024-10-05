@@ -1,4 +1,9 @@
 ﻿
+function changeLanguageToggle() {
+    const dropdown = document.querySelector("#languageDropdown");
+    dropdown.classList.toggle("hidden");
+}
+
 function Eliminar(url) {
     fetch(url, {
         headers: {

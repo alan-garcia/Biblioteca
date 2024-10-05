@@ -135,6 +135,9 @@
   <data name="AutorEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Authors deleted successfully</value>
   </data>
+  <data name="AutoresMenuOption" xml:space="preserve">
+    <value>Authors</value>
+  </data>
   <data name="AutoresSearchNotFound" xml:space="preserve">
     <value>Authors not found with this term</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="CategoriaSearchPlaceholder" xml:space="preserve">
     <value>Search for category name</value>
   </data>
+  <data name="CategoriasMenuOption" xml:space="preserve">
+    <value>Categories</value>
+  </data>
   <data name="CategoriasSearchNotFound" xml:space="preserve">
     <value>Categories not found with this term</value>
   </data>
@@ -188,6 +194,9 @@
   </data>
   <data name="ClienteSearchPlaceholder" xml:space="preserve">
     <value>Search for name, phone, or email</value>
+  </data>
+  <data name="ClientesMenuOption" xml:space="preserve">
+    <value>Customers</value>
   </data>
   <data name="ClientesSearchNotFound" xml:space="preserve">
     <value>Customers not found with this term</value>
@@ -243,6 +252,12 @@
   <data name="ExisteLibroClienteEdit" xml:space="preserve">
     <value>At least one book and one customer must exist before editing a loan</value>
   </data>
+  <data name="IdiomasMenuOption" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="InicioMenuOption" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="LibroCreadoMessageSuccess" xml:space="preserve">
     <value>Book created successfully</value>
   </data>
@@ -263,6 +278,9 @@
   </data>
   <data name="LibroSearchPlaceholder" xml:space="preserve">
     <value>Search for title, or ISBN</value>
+  </data>
+  <data name="LibrosMenuOption" xml:space="preserve">
+    <value>Books</value>
   </data>
   <data name="LibrosSearchNotFound" xml:space="preserve">
     <value>Books not found with this term</value>
@@ -329,6 +347,9 @@
   </data>
   <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Loans deleted successfully</value>
+  </data>
+  <data name="PrestamosMenuOption" xml:space="preserve">
+    <value>Loans</value>
   </data>
   <data name="PrestamosSearchNotFound" xml:space="preserve">
     <value>Loans not found with this term</value>
