@@ -4,6 +4,11 @@ function changeLanguageToggle() {
     dropdown.classList.toggle("hidden");
 }
 
+function menuResponsiveToggle(e) {
+    const menu = document.querySelector("#navbar-sticky");
+    menu.classList.toggle("hidden");
+}
+
 function Eliminar(url) {
     fetch(url, {
         headers: {

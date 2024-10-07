@@ -19,37 +19,37 @@
                         <span class="self-center whitespace-nowrap text-2xl font-semibold text-gray-600">Biblioteca</span>
                     </a>
                     <div class="flex space-x-3 md:order-2 md:space-x-0">
-                        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 p-2 text-sm text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-gray-200 md:hidden" aria-controls="navbar-sticky" aria-expanded="false">
+                    <button onclick="menuResponsiveToggle(this)" data-collapse-toggle="navbar-sticky" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 p-2 text-sm text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-gray-200 md:hidden" aria-controls="navbar-sticky" aria-expanded="false">
                             <span class="sr-only">Open main menu</span>
                             <icon href="menu-icon" class="size-6"></icon>
                         </button>
                     </div>
-                    <div class="hidden w-full items-center justify-end md:flex md:w-auto md:order-1" id="navbar-sticky">
+                    <div class="nav-links hidden w-full items-center justify-end md:flex md:w-auto md:order-1" id="navbar-sticky">
                         <ul class="mt-4 flex flex-col rounded-lg border border-gray-400 bg-white p-4 font-medium md:p-0 md:space-x-8 md:flex-row md:mt-0 md:border-0">
                             <li>
-                            <a asp-route="home" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["InicioMenuOption"]</a>
+                            <a asp-route="home" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["InicioMenuOption"]</a>
                             </li>
                             <li>
-                                <a asp-route="autorIndex" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["AutoresMenuOption"]</a>
+                                <a asp-route="autorIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["AutoresMenuOption"]</a>
                             </li>
                             <li>
-                                <a asp-route="categoriaIndex" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["CategoriasMenuOption"]</a>
+                                <a asp-route="categoriaIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["CategoriasMenuOption"]</a>
                             </li>
                             <li>
-                                <a asp-route="clienteIndex" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["ClientesMenuOption"]</a>
+                                <a asp-route="clienteIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["ClientesMenuOption"]</a>
                             </li>
                             <li>
-                                <a asp-route="libroIndex" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["LibrosMenuOption"]</a>
+                                <a asp-route="libroIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["LibrosMenuOption"]</a>
                             </li>
                             <li>
-                                <a asp-route="prestamoIndex" class="bbtc-menu-option bg-blue-700 md:bg-transparent md:text-blue-500" aria-current="page">@Localizer["PrestamosMenuOption"]</a>
+                                <a asp-route="prestamoIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["PrestamosMenuOption"]</a>
                             </li>
                             <li>
-                            <button id="dropdownNavbar" onclick="changeLanguageToggle();" data-dropdown-toggle="languageDropdown" class="bbtc-menu-dropdown md:text-blue-500">
+                            <button id="dropdownNavbar" onclick="changeLanguageToggle();" data-dropdown-toggle="languageDropdown" class="bbtc-menu-dropdown bg-transparent text-blue-500">
                                 @Localizer["IdiomasMenuOption"] <icon href="chevron-down" class="relative left-1 top-1 size-6"></icon>
                                 </button>
                                 <!-- Dropdown menu -->
-                                <div id="languageDropdown" class="z-10 -translate-x-4 absolute hidden w-44 translate-y-4 rounded-lg border bg-white font-normal shadow-md">
+                                <div id="languageDropdown" class="z-10 absolute hidden w-44 rounded-lg border bg-white font-normal shadow-md md:-translate-x-4 md:translate-y-4">
                                     <ul class="py-2 text-sm text-gray-400" aria-labelledby="dropdownLargeButton">
                                         <li>
                                         <a asp-route="setLanguage" asp-route-culture="es" asp-route-returnUrl="@currentUrl" class="bbtc-dropdown-menu-option" aria-current="page">Español</a>

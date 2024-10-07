@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .bbtc-menu-option {
-    @apply block rounded bg-blue-700 px-3 py-2 md:bg-transparent md:text-blue-500 md:p-0;
+    @apply block rounded px-3 py-2 text-center md:p-0;
 }
 
 .bbtc-dropdown-menu-option {
@@ -11,7 +11,7 @@
 }
 
 .bbtc-menu-dropdown {
-    @apply flex w-full items-center justify-between rounded px-3 py-2 md:border-0 md:p-0 md:w-auto;
+    @apply flex w-full items-center justify-center rounded px-3 py-2 md:border-0 md:p-0 md:w-auto;
 }
 
 .bbtc-title {
