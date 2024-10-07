@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.bbtc-menu-option {
+    @apply block rounded bg-blue-700 px-3 py-2 md:bg-transparent md:text-blue-500 md:p-0;
+}
+
+.bbtc-dropdown-menu-option {
+    @apply block px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white;
+}
+
+.bbtc-menu-dropdown {
+    @apply flex w-full items-center justify-between rounded px-3 py-2 md:border-0 md:p-0 md:w-auto;
+}
+
 .bbtc-title {
     @apply my-4 text-center text-3xl;
 }
