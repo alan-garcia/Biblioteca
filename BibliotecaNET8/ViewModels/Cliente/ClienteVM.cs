@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Cliente;
+namespace BibliotecaNET8.Web.ViewModels.Cliente;
 
 public class ClienteVM
 {

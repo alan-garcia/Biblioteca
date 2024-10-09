@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibliotecaNET8.Controllers;
+namespace BibliotecaNET8.Web.Controllers;
 
 public class HomeController : Controller
 {

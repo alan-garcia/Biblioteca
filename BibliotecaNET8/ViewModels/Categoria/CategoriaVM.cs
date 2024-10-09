@@ -1,4 +1,4 @@
-﻿namespace BibliotecaNET8.ViewModels.Categoria;
+﻿namespace BibliotecaNET8.Web.ViewModels.Categoria;
 
 public class CategoriaVM
 {

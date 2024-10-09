@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using BibliotecaNET8.Context;
+﻿using BibliotecaNET8.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
 
-namespace BibliotecaNET8.Config;
+namespace BibliotecaNET8.Web.Config;
 
 public static class SeedersConfig
 {

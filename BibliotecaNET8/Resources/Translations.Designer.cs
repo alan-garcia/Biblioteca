@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BibliotecaNET8.Resources {
+namespace BibliotecaNET8.Web.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BibliotecaNET8.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BibliotecaNET8.Resources.Translations", typeof(Translations).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BibliotecaNET8.Web.Resources.Translations", typeof(Translations).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

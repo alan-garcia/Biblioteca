@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Libro;
+namespace BibliotecaNET8.Web.ViewModels.Libro;
 
 public class LibroListVM
 {
@@ -24,6 +24,6 @@ public class LibroListVM
     [DisplayName("Categoría")]
     public int CategoriaId { get; set; }
 
-    public virtual Models.Autor Autor { get; set; }
-    public virtual Models.Categoria Categoria { get; set; }
+    public virtual Domain.Entities.Autor Autor { get; set; }
+    public virtual Domain.Entities.Categoria Categoria { get; set; }
 }

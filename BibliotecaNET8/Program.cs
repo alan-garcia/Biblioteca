@@ -1,23 +1,23 @@
+using BibliotecaNET8.Application.MappingProfiles;
+using BibliotecaNET8.Infrastructure;
+using BibliotecaNET8.Web.Config;
+using BibliotecaNET8.Web.MappingProfiles;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
-using BibliotecaNET8.Config;
-using BibliotecaNET8.Context;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQLConnection")), ServiceLifetime.Scoped
-);
 
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
+builder.Services.ConnectToDatabase(builder.Configuration);
 builder.Services.ConfigureLocalization();
 builder.Services.RegisterServicesAndRepositories();
 builder.Services.RegisterValidators();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddAutoMapper(typeof(ViewModelProfile));
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

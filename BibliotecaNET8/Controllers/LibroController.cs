@@ -1,17 +1,18 @@
 ﻿using AutoMapper;
+using BibliotecaNET8.Application.DTOs.Libro;
+using BibliotecaNET8.Application.Services.Interfaces;
+using BibliotecaNET8.Domain;
+using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
+using BibliotecaNET8.Infrastructure.Utils;
+using BibliotecaNET8.Web.ViewModels.Libro;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
-using BibliotecaNET8.Models;
-using BibliotecaNET8.Services;
-using BibliotecaNET8.Utils;
-using BibliotecaNET8.ViewModels;
-using BibliotecaNET8.ViewModels.Libro;
 
-namespace BibliotecaNET8.Controllers;
+namespace BibliotecaNET8.Web.Controllers;
 
 public class LibroController : Controller
 {
@@ -20,10 +21,12 @@ public class LibroController : Controller
     private readonly ICategoriaService _categoriaService;
     private readonly IStringLocalizer<Translations> _localizer;
     private readonly IMapper _mapper;
-    private readonly IValidator<LibroCreateVM> _libroValidator;
+    private readonly IValidator<LibroCreateDTO> _libroValidator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public LibroController(ILibroService libroService, IAutorService autorService, ICategoriaService categoriaService,
-        IStringLocalizer<Translations> localizer, IMapper mapper, IValidator<LibroCreateVM> libroValidator)
+        IStringLocalizer<Translations> localizer, IMapper mapper, IValidator<LibroCreateDTO> libroValidator,
+        IUnitOfWork unitOfWork)
     {
         _libroService = libroService;
         _autorService = autorService;
@@ -31,6 +34,7 @@ public class LibroController : Controller
         _localizer = localizer;
         _mapper = mapper;
         _libroValidator = libroValidator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
@@ -55,7 +59,7 @@ public class LibroController : Controller
         else
         {
             PagedResult<Libro> pagedResult = await _libroService.GetRecordsPagedResult(libros, pageNumber, pageSize);
-            librosPagedVM = _mapper.Map<PagedResult<Libro>, PagedResult<LibroListVM>>(pagedResult);
+            librosPagedVM = _mapper.Map<PagedResult<LibroListVM>>(source: pagedResult);
         }
 
         return View(librosPagedVM);
@@ -64,7 +68,7 @@ public class LibroController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        LibroCreateVM? libroVM = await LoadAutoresCategoriasDropdownList();
+        LibroCreateVM libroVM = await LoadAutoresCategoriasDropdownList();
         if (!libroVM.Autores.Any() || !libroVM.Categorias.Any())
         {
             TempData["ExisteAutorCategoria"] = _localizer["ExisteAutorCategoriaCreate"].Value;
@@ -77,12 +81,13 @@ public class LibroController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(IFormFile? Imagen, LibroCreateVM libroVM)
     {
-        ValidationResult result = await _libroValidator.ValidateAsync(libroVM);
+        LibroCreateDTO libroDTO = _mapper.Map<LibroCreateDTO>(source: libroVM);
+        var result = await _libroValidator.ValidateAsync(libroDTO);
         if (result.IsValid)
         {
             try
             {
-                Libro? libro = _mapper.Map<LibroCreateVM, Libro>(libroVM);
+                Libro libro = _mapper.Map<Libro>(source: libroDTO);
                 var (libroFinal, errorMensaje) = await _libroService.SetBinaryImage(Imagen, libro);
                 if (errorMensaje != null)
                 {
@@ -92,6 +97,7 @@ public class LibroController : Controller
                 }
 
                 await _libroService.AddLibro(libroFinal);
+                await _unitOfWork.Save();
                 TempData["LibroMensajes"] = _localizer["LibroCreadoMessageSuccess"].Value;
 
                 return RedirectToAction(nameof(Index));
@@ -113,7 +119,7 @@ public class LibroController : Controller
     {
         try
         {
-            Libro? libro = await _libroService.GetLibroById(id);
+            Libro libro = await _libroService.GetLibroById(id);
 
             LibroCreateVM libroVM = await LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
@@ -138,7 +144,7 @@ public class LibroController : Controller
         LibroCreateVM libroVM;
         try
         {
-            Libro? libro = await _libroService.GetLibroById(id);
+            Libro libro = await _libroService.GetLibroById(id);
 
             libroVM = await LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
@@ -166,12 +172,13 @@ public class LibroController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(IFormFile? Imagen, string? ImagenActual, LibroCreateVM libroVM)
     {
-        ValidationResult result = await _libroValidator.ValidateAsync(libroVM);
+        LibroCreateDTO libroDTO = _mapper.Map<LibroCreateDTO>(source: libroVM);
+        var result = await _libroValidator.ValidateAsync(libroDTO);
         if (result.IsValid)
         {
             try
             {
-                Libro? libro = _mapper.Map<LibroCreateVM, Libro>(libroVM);
+                Libro libro = _mapper.Map<Libro>(source: libroDTO);
                 var (libroFinal, errorMensaje) = await _libroService.SetBinaryImage(Imagen, libro, ImagenActual);
                 if (errorMensaje != null)
                 {
@@ -185,6 +192,7 @@ public class LibroController : Controller
                 }
 
                 await _libroService.UpdateLibro(libroFinal);
+                await _unitOfWork.Save();
                 TempData["LibroMensajes"] = _localizer["LibroModificadoMessageSuccess"].Value;
 
                 return RedirectToAction(nameof(Index));
@@ -208,17 +216,21 @@ public class LibroController : Controller
     public async Task<JsonResult> Delete(int? id)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _libroService.DeleteLibro(id);
             if (isDeleted)
             {
-                TempData["LibroMensajes"] = _localizer["LibroEliminadoMessageSuccess"].Value;
+                message = _localizer["LibroEliminadoMessageSuccess"].Value;
             }
             else
             {
-                TempData["LibroMensajes"] = _localizer["LibroEliminadoMessageFail"].Value;
+                message = _localizer["LibroEliminadoMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["LibroMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -228,7 +240,7 @@ public class LibroController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["LibroMensajes"]
+            mensaje = message
         });
     }
 
@@ -236,17 +248,21 @@ public class LibroController : Controller
     public async Task<JsonResult> DeleteMultiple([FromBody] int[] idsLibro)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _libroService.DeleteMultipleLibros(idsLibro);
             if (isDeleted)
             {
-                TempData["LibroMensajes"] = _localizer["LibroEliminadoMultipleMessageSuccess"].Value;
+                message = _localizer["LibroEliminadoMultipleMessageSuccess"].Value;
             }
             else
             {
-                TempData["LibroMensajes"] = _localizer["LibroEliminadoMultipleMessageFail"].Value;
+                message = _localizer["LibroEliminadoMultipleMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["ClientesMensaje"] = message;
         }
         catch (Exception ex)
         {
@@ -256,7 +272,7 @@ public class LibroController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["LibroMensajes"]
+            mensaje = message
         });
     }
 
@@ -280,7 +296,7 @@ public class LibroController : Controller
         }
 
         PagedResult<Libro> pagedResult = await _libroService.GetRecordsPagedResult(filtroLibrosSearch, pageNumber, pageSize);
-        PagedResult<LibroListVM> librosPagedVM = _mapper.Map<PagedResult<Libro>, PagedResult<LibroListVM>>(pagedResult);
+        PagedResult<LibroListVM> librosPagedVM = _mapper.Map<PagedResult<LibroListVM>>(source: pagedResult);
 
         return PartialView("_LibrosTabla", librosPagedVM);
     }

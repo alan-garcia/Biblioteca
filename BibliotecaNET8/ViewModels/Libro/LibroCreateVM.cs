@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Libro;
+namespace BibliotecaNET8.Web.ViewModels.Libro;
 
 public class LibroCreateVM
 {

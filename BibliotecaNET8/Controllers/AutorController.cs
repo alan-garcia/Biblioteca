@@ -1,31 +1,34 @@
 ﻿using AutoMapper;
+using BibliotecaNET8.Application.DTOs.Autor;
+using BibliotecaNET8.Application.Services.Interfaces;
+using BibliotecaNET8.Domain;
+using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
+using BibliotecaNET8.Infrastructure.Utils;
+using BibliotecaNET8.Web.ViewModels.Autor;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using BibliotecaNET8.Models;
-using BibliotecaNET8.Services;
-using BibliotecaNET8.Utils;
-using BibliotecaNET8.ViewModels;
-using BibliotecaNET8.ViewModels.Autor;
 
-namespace BibliotecaNET8.Controllers;
+namespace BibliotecaNET8.Web.Controllers;
 
 public class AutorController : Controller
 {
     private readonly IAutorService _autorService;
     private readonly IStringLocalizer<Translations> _localizer;
     private readonly IMapper _mapper;
-    private readonly IValidator<AutorVM> _autorValidator;
+    private readonly IValidator<AutorDTO> _autorValidator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public AutorController(IAutorService autorService,IStringLocalizer<Translations> localizer, IMapper mapper,
-        IValidator<AutorVM> autorValidator)
+        IValidator<AutorDTO> autorValidator, IUnitOfWork unitOfWork)
     {
         _autorService = autorService;
         _localizer = localizer;
         _mapper = mapper;
         _autorValidator = autorValidator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
@@ -50,7 +53,7 @@ public class AutorController : Controller
         else
         {
             PagedResult<Autor> pagedResult = await _autorService.GetRecordsPagedResult(autores, pageNumber, pageSize);
-            autoresPagedVM = _mapper.Map<PagedResult<Autor>, PagedResult<AutorVM>>(pagedResult);
+            autoresPagedVM = _mapper.Map<PagedResult<AutorVM>>(source: pagedResult);
         }
 
         return View(autoresPagedVM);
@@ -62,13 +65,15 @@ public class AutorController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(AutorVM autorVM)
     {
-        ValidationResult result = await _autorValidator.ValidateAsync(autorVM);
+        AutorDTO autorDTO = _mapper.Map<AutorDTO>(source: autorVM);
+        var result = await _autorValidator.ValidateAsync(autorDTO);
         if (result.IsValid)
         {
             try
             {
-                Autor autor = _mapper.Map<AutorVM, Autor>(autorVM);
+                Autor autor = _mapper.Map<Autor>(source: autorDTO);
                 await _autorService.AddAutor(autor);
+                await _unitOfWork.Save();
                 TempData["AutoresMensaje"] = _localizer["AutorCreadoMessageSuccess"].Value;
 
                 return RedirectToAction(nameof(Index));
@@ -90,7 +95,7 @@ public class AutorController : Controller
         try
         {
             Autor autor = await _autorService.GetAutorById(id);
-            AutorVM autorVM = _mapper.Map<Autor, AutorVM>(autor);
+            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
 
             return View(autorVM);
         }
@@ -106,7 +111,7 @@ public class AutorController : Controller
         try
         {
             Autor autor = await _autorService.GetAutorById(id);
-            AutorVM autorVM = _mapper.Map<Autor, AutorVM>(autor);
+            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
 
             return View(autorVM);
         }
@@ -119,11 +124,13 @@ public class AutorController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(AutorVM autorVM)
     {
-        ValidationResult result = await _autorValidator.ValidateAsync(autorVM);
+        AutorDTO autorDTO = _mapper.Map<AutorDTO>(source: autorVM);
+        var result = await _autorValidator.ValidateAsync(autorDTO);
         if (result.IsValid)
         {
-            Autor autor = _mapper.Map<AutorVM, Autor>(autorVM);
+            Autor autor = _mapper.Map<Autor>(source: autorDTO);
             await _autorService.UpdateAutor(autor);
+            await _unitOfWork.Save();
             TempData["AutoresMensaje"] = _localizer["AutorModificadoMessageSuccess"].Value;
 
             return RedirectToAction(nameof(Index));
@@ -138,17 +145,21 @@ public class AutorController : Controller
     public async Task<JsonResult> Delete(int? id)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _autorService.DeleteAutor(id);
             if (isDeleted)
             {
-                TempData["AutoresMensajes"] = _localizer["AutorEliminadoMessageSuccess"].Value;
+                message = _localizer["AutorEliminadoMessageSuccess"].Value;
             }
             else
             {
-                TempData["AutoresMensajes"] = _localizer["AutorEliminadoMessageFail"].Value;
+                message = _localizer["AutorEliminadoMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["AutoresMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -158,7 +169,7 @@ public class AutorController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["AutoresMensajes"]
+            mensaje = message
         });
     }
 
@@ -166,17 +177,21 @@ public class AutorController : Controller
     public async Task<JsonResult> DeleteMultiple([FromBody] int[] idsAutor)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _autorService.DeleteMultipleAutores(idsAutor);
             if (isDeleted)
             {
-                TempData["AutoresMensajes"] = _localizer["AutorEliminadoMultipleMessageSuccess"].Value;
+                message = _localizer["AutorEliminadoMultipleMessageSuccess"].Value;
             }
             else
             {
-                TempData["AutoresMensajes"] = _localizer["AutorEliminadoMultipleMessageFail"].Value;
+                message = _localizer["AutorEliminadoMultipleMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["AutoresMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -186,7 +201,7 @@ public class AutorController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["AutoresMensajes"]
+            mensaje = message
         });
     }
 
@@ -208,7 +223,7 @@ public class AutorController : Controller
         }
 
         PagedResult<Autor> pagedResult = await _autorService.GetRecordsPagedResult(filtroAutores, pageNumber, pageSize);
-        PagedResult<AutorVM> autoresPagedVM = _mapper.Map<PagedResult<Autor>, PagedResult<AutorVM>>(pagedResult);
+        PagedResult<AutorVM> autoresPagedVM = _mapper.Map<PagedResult<AutorVM>>(source: pagedResult);
 
         return PartialView("_AutoresTabla", autoresPagedVM);
     }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Prestamo;
+namespace BibliotecaNET8.Web.ViewModels.Prestamo;
 
 public class PrestamoCreateVM
 {

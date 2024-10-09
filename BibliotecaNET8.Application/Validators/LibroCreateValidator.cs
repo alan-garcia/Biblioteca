@@ -1,0 +1,24 @@
+﻿using BibliotecaNET8.Application.DTOs.Libro;
+using BibliotecaNET8.Application.Resources;
+using FluentValidation;
+
+namespace BibliotecaNET8.Application.Validators
+{
+    public class LibroCreateValidator : AbstractValidator<LibroCreateDTO>
+    {
+        public LibroCreateValidator()
+        {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
+            RuleFor(libro => libro.Titulo)
+                .NotEmpty().WithMessage(ValidationMessages.LibroTituloRequired)
+                .MaximumLength(150).WithMessage(ValidationMessages.LibroTituloStringLength);
+
+            RuleFor(libro => libro.ISBN)
+                .MaximumLength(13).WithMessage(ValidationMessages.LibroISBNStringLength);
+
+            RuleFor(libro => libro.FechaPublicacion)
+                .LessThan(DateTime.Now).WithMessage(ValidationMessages.LibroFechaPublicacionFuture);
+        }
+    }
+}

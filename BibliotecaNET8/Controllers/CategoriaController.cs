@@ -1,32 +1,34 @@
 ﻿using AutoMapper;
+using BibliotecaNET8.Application.DTOs.Categoria;
+using BibliotecaNET8.Application.Services.Interfaces;
+using BibliotecaNET8.Domain;
+using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
+using BibliotecaNET8.Infrastructure.Utils;
+using BibliotecaNET8.Web.ViewModels.Categoria;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using BibliotecaNET8.Models;
-using BibliotecaNET8.Services;
-using BibliotecaNET8.Utils;
-using BibliotecaNET8.ViewModels;
-using BibliotecaNET8.ViewModels.Categoria;
-using BibliotecaNET8.ViewModels.Autor;
 
-namespace BibliotecaNET8.Controllers;
+namespace BibliotecaNET8.Web.Controllers;
 
 public class CategoriaController : Controller
 {
     private readonly ICategoriaService _categoriaService;
     private readonly IStringLocalizer<Translations> _localizer;
     private readonly IMapper _mapper;
-    private readonly IValidator<CategoriaVM> _categoriaValidator;
+    private readonly IValidator<CategoriaDTO> _categoriaValidator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CategoriaController(ICategoriaService categoriaService, IStringLocalizer<Translations> localizer, IMapper mapper,
-        IValidator<CategoriaVM> categoriaValidator)
+        IValidator<CategoriaDTO> categoriaValidator, IUnitOfWork unitOfWork)
     {
         _categoriaService = categoriaService;
         _localizer = localizer;
         _mapper = mapper;
         _categoriaValidator = categoriaValidator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
@@ -50,7 +52,7 @@ public class CategoriaController : Controller
         else
         {
             PagedResult<Categoria> pagedResult = await _categoriaService.GetRecordsPagedResult(categorias, pageNumber, pageSize);
-            categoriasPagedVM = _mapper.Map<PagedResult<Categoria>, PagedResult<CategoriaVM>>(pagedResult);
+            categoriasPagedVM = _mapper.Map<PagedResult<CategoriaVM>>(source: pagedResult);
         }
 
         return View(categoriasPagedVM);
@@ -62,13 +64,15 @@ public class CategoriaController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CategoriaVM categoriaVM)
     {
-        ValidationResult result = await _categoriaValidator.ValidateAsync(categoriaVM);
+        CategoriaDTO categoriaDTO = _mapper.Map<CategoriaDTO>(source: categoriaVM);
+        var result = await _categoriaValidator.ValidateAsync(categoriaDTO);
         if (result.IsValid)
         {
             try
             {
-                Categoria? categoria = _mapper.Map<CategoriaVM, Categoria>(categoriaVM);
+                Categoria? categoria = _mapper.Map<Categoria>(source: categoriaDTO);
                 await _categoriaService.AddCategoria(categoria);
+                await _unitOfWork.Save();
                 TempData["CategoriasMensaje"] = _localizer["CategoriaCreadaMessageSuccess"].Value;
 
                 return RedirectToAction(nameof(Index));
@@ -90,7 +94,7 @@ public class CategoriaController : Controller
         try
         {
             Categoria categoria = await _categoriaService.GetCategoriaById(id);
-            CategoriaVM categoriaVM = _mapper.Map<Categoria, CategoriaVM>(categoria);
+            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
 
             return View(categoriaVM);
         }
@@ -106,7 +110,7 @@ public class CategoriaController : Controller
         try
         {
             Categoria categoria = await _categoriaService.GetCategoriaById(id);
-            CategoriaVM categoriaVM = _mapper.Map<Categoria, CategoriaVM>(categoria);
+            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
 
             return View(categoriaVM);
         }
@@ -119,11 +123,13 @@ public class CategoriaController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(CategoriaVM categoriaVM)
     {
-        ValidationResult result = await _categoriaValidator.ValidateAsync(categoriaVM);
+        CategoriaDTO categoriaDTO = _mapper.Map<CategoriaDTO>(source: categoriaVM);
+        var result = await _categoriaValidator.ValidateAsync(categoriaDTO);
         if (result.IsValid)
         {
-            Categoria categoria = _mapper.Map<CategoriaVM, Categoria>(categoriaVM);
+            Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
             await _categoriaService.UpdateCategoria(categoria);
+            await _unitOfWork.Save();
             TempData["CategoriasMensaje"] = _localizer["CategoriaModificadaMessageSuccess"].Value;
 
             return RedirectToAction(nameof(Index));
@@ -138,17 +144,21 @@ public class CategoriaController : Controller
     public async Task<JsonResult> Delete(int? id)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _categoriaService.DeleteCategoria(id);
             if (isDeleted)
             {
-                TempData["CategoriaMensajes"] = _localizer["CategoriaEliminadaMessageSuccess"].Value;
+                message = _localizer["CategoriaEliminadaMessageSuccess"].Value;
             }
             else
             {
-                TempData["CategoriaMensajes"] = _localizer["CategoriaEliminadaMessageFail"].Value;
+                message = _localizer["CategoriaEliminadaMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["CategoriaMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -158,7 +168,7 @@ public class CategoriaController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["CategoriaMensajes"]
+            mensaje = message
         });
     }
 
@@ -166,17 +176,21 @@ public class CategoriaController : Controller
     public async Task<JsonResult> DeleteMultiple([FromBody] int[] idsCategoria)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _categoriaService.DeleteMultipleCategorias(idsCategoria);
             if (isDeleted)
             {
-                TempData["CategoriaMensajes"] = _localizer["CategoriaEliminadaMultipleMessageSuccess"].Value;
+                message = _localizer["CategoriaEliminadaMultipleMessageSuccess"].Value;
             }
             else
             {
-                TempData["CategoriaMensajes"] = _localizer["CategoriaEliminadaMultipleMessageFail"].Value;
+                message = _localizer["CategoriaEliminadaMultipleMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["CategoriaMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -186,7 +200,7 @@ public class CategoriaController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["CategoriaMensajes"]
+            mensaje = message
         });
     }
 
@@ -207,7 +221,7 @@ public class CategoriaController : Controller
         }
 
         PagedResult<Categoria> pagedResult = await _categoriaService.GetRecordsPagedResult(filtroCategorias, pageNumber, pageSize);
-        PagedResult<CategoriaVM> categoriasPagedVM = _mapper.Map<PagedResult<Categoria>, PagedResult<CategoriaVM>>(pagedResult);
+        PagedResult<CategoriaVM> categoriasPagedVM = _mapper.Map<PagedResult<CategoriaVM>>(source: pagedResult);
 
         return PartialView("_CategoriasTabla", categoriasPagedVM);
     }

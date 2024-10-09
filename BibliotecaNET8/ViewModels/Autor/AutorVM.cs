@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Autor;
+namespace BibliotecaNET8.Web.ViewModels.Autor;
 
 public class AutorVM
 {

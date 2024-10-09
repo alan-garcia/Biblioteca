@@ -2,17 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
-using BibliotecaNET8.Models;
-using BibliotecaNET8.Services;
-using BibliotecaNET8.Utils;
-using BibliotecaNET8.ViewModels;
-using BibliotecaNET8.ViewModels.Prestamo;
 using FluentValidation;
-using FluentValidation.Results;
 using FluentValidation.AspNetCore;
-using BibliotecaNET8.ViewModels.Libro;
+using BibliotecaNET8.Application.Services.Interfaces;
+using BibliotecaNET8.Infrastructure.Utils;
+using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain;
+using BibliotecaNET8.Web.ViewModels.Prestamo;
+using BibliotecaNET8.Application.DTOs.Prestamo;
+using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 
-namespace BibliotecaNET8.Controllers;
+namespace BibliotecaNET8.Web.Controllers;
 
 public class PrestamoController : Controller
 {
@@ -21,11 +21,12 @@ public class PrestamoController : Controller
     private readonly IClienteService _clienteService;
     private readonly IStringLocalizer<Translations> _localizer;
     private readonly IMapper _mapper;
-    private readonly IValidator<PrestamoCreateVM> _prestamoValidator;
+    private readonly IValidator<PrestamoCreateDTO> _prestamoValidator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public PrestamoController(IPrestamoService prestamoService, ILibroService libroService,
         IClienteService clienteRepository, IStringLocalizer<Translations> localizer, IMapper mapper,
-        IValidator<PrestamoCreateVM> prestamoValidator)
+        IValidator<PrestamoCreateDTO> prestamoValidator, IUnitOfWork unitOfWork)
     {
         _prestamoService = prestamoService;
         _libroService = libroService;
@@ -33,6 +34,7 @@ public class PrestamoController : Controller
         _localizer = localizer;
         _mapper = mapper;
         _prestamoValidator = prestamoValidator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
@@ -58,7 +60,7 @@ public class PrestamoController : Controller
         else
         {
             PagedResult<Prestamo> pagedResult = await _prestamoService.GetRecordsPagedResult(prestamos, pageNumber, pageSize);
-            prestamosPagedVM = _mapper.Map<PagedResult<Prestamo>, PagedResult<PrestamoListVM>>(pagedResult);
+            prestamosPagedVM = _mapper.Map<PagedResult<PrestamoListVM>>(source: pagedResult);
         }
 
         return View(prestamosPagedVM);
@@ -67,7 +69,7 @@ public class PrestamoController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        PrestamoCreateVM? prestamoVM = await LoadClientesLibrosDropdownList();
+        PrestamoCreateVM prestamoVM = await LoadClientesLibrosDropdownList();
         if (!prestamoVM.Libros.Any() || !prestamoVM.Clientes.Any())
         {
             TempData["ExisteLibroClienteCreate"] = _localizer["ExisteLibroClienteCreate"].Value;
@@ -80,13 +82,15 @@ public class PrestamoController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(PrestamoCreateVM prestamoVM)
     {
-        ValidationResult result = await _prestamoValidator.ValidateAsync(prestamoVM);
+        PrestamoCreateDTO prestamoDTO = _mapper.Map<PrestamoCreateDTO>(source: prestamoVM);
+        var result = await _prestamoValidator.ValidateAsync(prestamoDTO);
         if (result.IsValid)
         {
             try
             {
-                Prestamo? prestamo = _mapper.Map<PrestamoCreateVM, Prestamo>(prestamoVM);
+                Prestamo prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
                 await _prestamoService.AddPrestamo(prestamo);
+                await _unitOfWork.Save();
                 TempData["PrestamoMensajes"] = _localizer["PrestamoCreadoMessageSuccess"].Value;
 
                 return RedirectToAction(nameof(Index));
@@ -108,7 +112,7 @@ public class PrestamoController : Controller
     {
         try
         {
-            Prestamo? prestamo = await _prestamoService.GetPrestamoById(id);
+            Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
 
             PrestamoCreateVM prestamoVM = await LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
@@ -131,7 +135,7 @@ public class PrestamoController : Controller
         PrestamoCreateVM prestamoVM;
         try
         {
-            Prestamo? prestamo = await _prestamoService.GetPrestamoById(id);
+            Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
 
             prestamoVM = await LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
@@ -157,11 +161,13 @@ public class PrestamoController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(PrestamoCreateVM prestamoVM)
     {
-        ValidationResult result = await _prestamoValidator.ValidateAsync(prestamoVM);
+        PrestamoCreateDTO prestamoDTO = _mapper.Map<PrestamoCreateDTO>(source: prestamoVM);
+        var result = await _prestamoValidator.ValidateAsync(prestamoDTO);
         if (result.IsValid)
         {
-            Prestamo? prestamo = _mapper.Map<PrestamoCreateVM, Prestamo>(prestamoVM);
+            Prestamo? prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
             await _prestamoService.UpdatePrestamo(prestamo);
+            await _unitOfWork.Save();
             TempData["PrestamoMensajes"] = _localizer["PrestamoModificadoMessageSuccess"].Value;
 
             return RedirectToAction(nameof(Index));
@@ -176,17 +182,21 @@ public class PrestamoController : Controller
     public async Task<JsonResult> Delete(int? id)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _prestamoService.DeletePrestamo(id);
             if (isDeleted)
             {
-                TempData["PrestamoMensajes"] = _localizer["PrestamoEliminadoMessageSuccess"].Value;
+                message = _localizer["PrestamoEliminadoMessageSuccess"].Value;
             }
             else
             {
-                TempData["PrestamoMensajes"] = _localizer["PrestamoEliminadoMessageFail"].Value;
+                message = _localizer["PrestamoEliminadoMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["PrestamoMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -196,7 +206,7 @@ public class PrestamoController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["PrestamoMensajes"]
+            mensaje = message
         });
     }
 
@@ -204,17 +214,21 @@ public class PrestamoController : Controller
     public async Task<JsonResult> DeleteMultiple([FromBody] int[] idsPrestamo)
     {
         bool isDeleted;
+        string message;
         try
         {
             isDeleted = await _prestamoService.DeleteMultiplePrestamos(idsPrestamo);
             if (isDeleted)
             {
-                TempData["PrestamoMensajes"] = _localizer["PrestamoEliminadoMultipleMessageSuccess"].Value;
+                message = _localizer["PrestamoEliminadoMultipleMessageSuccess"].Value;
             }
             else
             {
-                TempData["PrestamoMensajes"] = _localizer["PrestamoEliminadoMultipleMessageFail"].Value;
+                message = _localizer["PrestamoEliminadoMultipleMessageFail"].Value;
             }
+
+            await _unitOfWork.Save();
+            TempData["ClientesMensaje"] = message;
         }
         catch (Exception ex)
         {
@@ -224,7 +238,7 @@ public class PrestamoController : Controller
         return Json(new
         {
             success = isDeleted,
-            mensaje = TempData["PrestamoMensajes"]
+            mensaje = message
         });
     }
 
@@ -249,7 +263,7 @@ public class PrestamoController : Controller
         }
 
         PagedResult<Prestamo> pagedResult = await _prestamoService.GetRecordsPagedResult(filtroPrestamosSearch, pageNumber, pageSize);
-        PagedResult<PrestamoListVM> prestamosPagedVM = _mapper.Map<PagedResult<Prestamo>, PagedResult<PrestamoListVM>>(pagedResult);
+        PagedResult<PrestamoListVM> prestamosPagedVM = _mapper.Map<PagedResult<PrestamoListVM>>(source: pagedResult);
 
         return PartialView("_PrestamosTabla", prestamosPagedVM);
     }

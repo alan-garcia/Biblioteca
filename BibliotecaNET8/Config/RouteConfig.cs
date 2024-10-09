@@ -1,6 +1,6 @@
-﻿using BibliotecaNET8.Utils;
+﻿using BibliotecaNET8.Infrastructure.Utils;
 
-namespace BibliotecaNET8.Config;
+namespace BibliotecaNET8.Web.Config;
 
 public static class RouteConfig
 {

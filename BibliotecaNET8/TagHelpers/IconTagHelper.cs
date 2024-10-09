@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace BibliotecaNET8.TagHelpers
+namespace BibliotecaNET8.Web.TagHelpers
 {
     [HtmlTargetElement("icon")]
     public class IconTagHelper : TagHelper

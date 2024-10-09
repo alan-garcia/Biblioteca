@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 
-namespace BibliotecaNET8.Config;
+namespace BibliotecaNET8.Web.Config;
 
 public static class LocalizationConfig
 {

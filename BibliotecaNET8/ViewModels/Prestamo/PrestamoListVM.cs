@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliotecaNET8.ViewModels.Prestamo;
+namespace BibliotecaNET8.Web.ViewModels.Prestamo;
 
 public class PrestamoListVM
 {
@@ -21,6 +21,6 @@ public class PrestamoListVM
     [DisplayName("Cliente")]
     public int ClienteId { get; set; }
 
-    public virtual Models.Libro Libro { get; set; }
-    public virtual Models.Cliente Cliente { get; set; }
+    public virtual Domain.Entities.Libro Libro { get; set; }
+    public virtual Domain.Entities.Cliente Cliente { get; set; }
 }
