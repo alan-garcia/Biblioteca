@@ -13,6 +13,9 @@ using Microsoft.Extensions.Localization;
 
 namespace BibliotecaNET8.Web.Controllers;
 
+/// <summary>
+///     Funcionalidades de la vista "Categoria"
+/// </summary>
 public class CategoriaController : Controller
 {
     private readonly ICategoriaService _categoriaService;

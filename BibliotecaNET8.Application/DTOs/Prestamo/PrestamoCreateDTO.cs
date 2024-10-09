@@ -9,6 +9,7 @@ public class PrestamoCreateDTO
     public DateTime? FechaDevolucion { get; set; } = DateTime.Now;
     public int LibroId { get; set; }
     public int ClienteId { get; set; }
+
     public IEnumerable<SelectListItem> Libros { get; set; }
     public IEnumerable<SelectListItem> Clientes { get; set; }
 }

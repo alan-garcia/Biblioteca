@@ -14,6 +14,9 @@ using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 
 namespace BibliotecaNET8.Web.Controllers;
 
+/// <summary>
+///     Funcionalidades de la vista "Préstamo"
+/// </summary>
 public class PrestamoController : Controller
 {
     private readonly IPrestamoService _prestamoService;
@@ -228,7 +231,7 @@ public class PrestamoController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["ClientesMensaje"] = message;
+            TempData["PrestamoMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -268,6 +271,11 @@ public class PrestamoController : Controller
         return PartialView("_PrestamosTabla", prestamosPagedVM);
     }
 
+    /// <summary>
+    ///     Carga toda la lista de clientes y libros en el elemento <select></select> del formulario
+    /// </summary>
+    /// <param name="prestamoVM">El ViewModel a asignar en la vista.</param>
+    /// <returns>ViewModel con la lista de clientes y libros cargadas</returns>
     private async Task<PrestamoCreateVM> LoadClientesLibrosDropdownList(PrestamoCreateVM? prestamoVM = null)
     {
         IEnumerable<Cliente> clientes = await _clienteService.GetAllClientes();

@@ -2,8 +2,15 @@
 
 namespace BibliotecaNET8.Web.Config;
 
+/// <summary>
+///     Configuración de todas las rutas de la aplicación.
+/// </summary>
 public static class RouteConfig
 {
+    /// <summary>
+    ///     Registra todas las rutas de la aplicación con sus respectivos controladores, acciones, y patrones de URL.
+    /// </summary>
+    /// <param name="endpoints">Los endpoints de las rutas provenientes del contenedor de dependencias (Program.cs).</param>
     public static void RegisterRoutes(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -23,7 +30,6 @@ public static class RouteConfig
         PrestamosRoutes(endpoints);
     }
 
-    #region AutoresRoutes
     public static void AutoresRoutes(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -62,9 +68,7 @@ public static class RouteConfig
             defaults: new { controller = "Autor", action = "Search",
                 pageNumber = PaginationSettings.PageNumber, pageSize = PaginationSettings.PageSize });
     }
-    #endregion
 
-    #region CategoriasRoutes
     public static void CategoriasRoutes(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -104,9 +108,7 @@ public static class RouteConfig
                 pageNumber = PaginationSettings.PageNumber, pageSize = PaginationSettings.PageSize
             });
     }
-    #endregion
 
-    #region ClientesRoutes
     public static void ClientesRoutes(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -146,9 +148,7 @@ public static class RouteConfig
                 pageNumber = PaginationSettings.PageNumber, pageSize = PaginationSettings.PageSize
             });
     }
-    #endregion
 
-    #region LibrosRoutes
     public static void LibrosRoutes(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -188,9 +188,7 @@ public static class RouteConfig
                 pageNumber = PaginationSettings.PageNumber, pageSize = PaginationSettings.PageSize
             });
     }
-    #endregion
 
-    #region PrestamosRoutes
     public static void PrestamosRoutes(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapControllerRoute(
@@ -230,5 +228,4 @@ public static class RouteConfig
                 pageNumber = PaginationSettings.PageNumber, pageSize = PaginationSettings.PageSize
             });
     }
-    #endregion
 }

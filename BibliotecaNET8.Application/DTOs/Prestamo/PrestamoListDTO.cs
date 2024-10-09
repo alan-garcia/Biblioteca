@@ -7,6 +7,7 @@ public class PrestamoListDTO
     public DateTime? FechaDevolucion { get; set; } = DateTime.Now;
     public int LibroId { get; set; }
     public int ClienteId { get; set; }
+
     public virtual Domain.Entities.Libro Libro { get; set; }
     public virtual Domain.Entities.Cliente Cliente { get; set; }
 }

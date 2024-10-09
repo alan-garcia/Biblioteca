@@ -336,17 +336,23 @@
   <data name="PrestamoCreadoMessageSuccess" xml:space="preserve">
     <value>Préstamo creado correctamente</value>
   </data>
+  <data name="PrestamoEliminadoMessageFail" xml:space="preserve">
+    <value>Error al eliminar el préstamo</value>
+  </data>
   <data name="PrestamoEliminadoMessageSuccess" xml:space="preserve">
     <value>Préstamo eliminado correctamente</value>
+  </data>
+  <data name="PrestamoEliminadoMultipleMessageFail" xml:space="preserve">
+    <value>Error al eliminar múltiples préstamos</value>
+  </data>
+  <data name="PrestamoEliminadoMultipleMessageSuccess" xml:space="preserve">
+    <value>Préstamos eliminados correctamente</value>
   </data>
   <data name="PrestamoModificadoMessageSuccess" xml:space="preserve">
     <value>Préstamo modificado correctamente</value>
   </data>
   <data name="PrestamoSearchPlaceholder" xml:space="preserve">
     <value>Buscar por nombre o apellido del cliente, o por título de libro</value>
-  </data>
-  <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
-    <value>Préstamos eliminados correctamente</value>
   </data>
   <data name="PrestamosMenuOption" xml:space="preserve">
     <value>Préstamos</value>

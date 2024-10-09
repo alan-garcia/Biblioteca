@@ -4,6 +4,9 @@ using BibliotecaNET8.Application.DTOs.Categoria;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "Categoría"
+    /// </summary>
     public class CategoriaValidator : AbstractValidator<CategoriaDTO>
     {
         public CategoriaValidator()

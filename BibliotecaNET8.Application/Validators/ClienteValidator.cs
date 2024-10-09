@@ -4,6 +4,9 @@ using BibliotecaNET8.Application.DTOs.Cliente;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "Cliente"
+    /// </summary>
     public class ClienteValidator : AbstractValidator<ClienteDTO>
     {
         public ClienteValidator()

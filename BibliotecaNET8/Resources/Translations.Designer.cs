@@ -718,11 +718,38 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error al eliminar el préstamo.
+        /// </summary>
+        public static string PrestamoEliminadoMessageFail {
+            get {
+                return ResourceManager.GetString("PrestamoEliminadoMessageFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Préstamo eliminado correctamente.
         /// </summary>
         public static string PrestamoEliminadoMessageSuccess {
             get {
                 return ResourceManager.GetString("PrestamoEliminadoMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al eliminar múltiples préstamos.
+        /// </summary>
+        public static string PrestamoEliminadoMultipleMessageFail {
+            get {
+                return ResourceManager.GetString("PrestamoEliminadoMultipleMessageFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Préstamos eliminados correctamente.
+        /// </summary>
+        public static string PrestamoEliminadoMultipleMessageSuccess {
+            get {
+                return ResourceManager.GetString("PrestamoEliminadoMultipleMessageSuccess", resourceCulture);
             }
         }
         
@@ -741,15 +768,6 @@ namespace BibliotecaNET8.Web.Resources {
         public static string PrestamoSearchPlaceholder {
             get {
                 return ResourceManager.GetString("PrestamoSearchPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Préstamos eliminados correctamente.
-        /// </summary>
-        public static string PrestamosEliminadoMultipleMessageSuccess {
-            get {
-                return ResourceManager.GetString("PrestamosEliminadoMultipleMessageSuccess", resourceCulture);
             }
         }
         

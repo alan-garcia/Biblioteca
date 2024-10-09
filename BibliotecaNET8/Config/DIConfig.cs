@@ -14,8 +14,15 @@ using FluentValidation;
 
 namespace BibliotecaNET8.Web.Config;
 
+/// <summary>
+///     Configuración de las inyecciones de dependencias de la aplicación
+/// </summary>
 public static class DIConfig
 {
+    /// <summary>
+    ///     Registra las inyecciones de dependencias de los "Servicios" y "Repositorios".
+    /// </summary>
+    /// <param name="services">La colección de servicios provenientes del contenedor de dependencias (Program.cs).</param>
     public static void RegisterServicesAndRepositories(this IServiceCollection services)
     {
         services.AddScoped<IAutorService, AutorService>();
@@ -31,6 +38,10 @@ public static class DIConfig
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
+    /// <summary>
+    ///     Registra las inyecciones de dependencias de las validaciones de las entidades.
+    /// </summary>
+    /// <param name="services">La colección de servicios provenientes del contenedor de dependencias (Program.cs)</param>
     public static void RegisterValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<AutorDTO>, AutorValidator>();

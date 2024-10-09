@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BibliotecaNET8.Infrastructure;
 
+/// <summary>
+///     Configuración de la cadena de conexión de la Base de Datos
+/// </summary>
 public static class DatabaseConfig
 {
     public static IServiceCollection ConnectToDatabase(this IServiceCollection services, IConfiguration configuration)

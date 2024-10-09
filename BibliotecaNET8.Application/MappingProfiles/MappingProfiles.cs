@@ -9,6 +9,9 @@ using BibliotecaNET8.Domain.Entities;
 
 namespace BibliotecaNET8.Application.MappingProfiles;
 
+/// <summary>
+///     Configuración de AutoMapper cuyas clases de destino se utilizan en la capa de Application
+/// </summary>
 public class MappingProfiles : Profile
 {
     public MappingProfiles()

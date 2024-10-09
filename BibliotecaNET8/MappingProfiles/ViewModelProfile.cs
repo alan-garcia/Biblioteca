@@ -14,6 +14,9 @@ using BibliotecaNET8.Web.ViewModels.Prestamo;
 
 namespace BibliotecaNET8.Web.MappingProfiles;
 
+/// <summary>
+///     Configuración de AutoMapper cuyas clases de destino se utilizan en la capa de presentación
+/// </summary>
 public class ViewModelProfile : Profile
 {
     public ViewModelProfile()

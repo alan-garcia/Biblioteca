@@ -336,8 +336,14 @@
   <data name="PrestamoCreadoMessageSuccess" xml:space="preserve">
     <value>Loan created successfully</value>
   </data>
+  <data name="PrestamoEliminadoMessageFail" xml:space="preserve">
+    <value>Error deleting loan</value>
+  </data>
   <data name="PrestamoEliminadoMessageSuccess" xml:space="preserve">
     <value>Loan deleted successfully</value>
+  </data>
+  <data name="PrestamoEliminadoMultipleMessageFail" xml:space="preserve">
+    <value>Error deleting multiple loans</value>
   </data>
   <data name="PrestamoModificadoMessageSuccess" xml:space="preserve">
     <value>Loan modified successfully</value>
@@ -345,7 +351,7 @@
   <data name="PrestamoSearchPlaceholder" xml:space="preserve">
     <value>Search for name or lastname's customer, or by book title</value>
   </data>
-  <data name="PrestamosEliminadoMultipleMessageSuccess" xml:space="preserve">
+  <data name="PrestamosEliminadosMultipleMessageSuccess" xml:space="preserve">
     <value>Loans deleted successfully</value>
   </data>
   <data name="PrestamosMenuOption" xml:space="preserve">

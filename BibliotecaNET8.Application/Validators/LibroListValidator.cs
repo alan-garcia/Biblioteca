@@ -4,6 +4,9 @@ using BibliotecaNET8.Application.DTOs.Libro;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "LibroList"
+    /// </summary>
     public class LibroListValidator : AbstractValidator<LibroListDTO>
     {
         public LibroListValidator()

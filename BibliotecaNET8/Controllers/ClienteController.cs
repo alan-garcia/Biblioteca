@@ -13,6 +13,9 @@ using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 
 namespace BibliotecaNET8.Web.Controllers;
 
+/// <summary>
+///     Funcionalidades de la vista "Cliente"
+/// </summary>
 public class ClienteController : Controller
 {
     private readonly IClienteService _clienteService;

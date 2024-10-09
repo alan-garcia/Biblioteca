@@ -4,6 +4,9 @@ using BibliotecaNET8.Application.DTOs.Autor;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "Autor"
+    /// </summary>
     public class AutorValidator : AbstractValidator<AutorDTO>
     {
         public AutorValidator()

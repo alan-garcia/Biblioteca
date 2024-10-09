@@ -15,9 +15,10 @@ builder.Services.ConnectToDatabase(builder.Configuration);
 builder.Services.ConfigureLocalization();
 builder.Services.RegisterServicesAndRepositories();
 builder.Services.RegisterValidators();
+
+// Configura todos los Profiles de AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddAutoMapper(typeof(ViewModelProfile));
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -40,6 +41,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
+// Registra las rutas de la aplicación
 app.RegisterRoutes();
 
 app.Run();

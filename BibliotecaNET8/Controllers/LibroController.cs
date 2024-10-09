@@ -14,6 +14,9 @@ using Microsoft.Extensions.Localization;
 
 namespace BibliotecaNET8.Web.Controllers;
 
+/// <summary>
+///     Funcionalidades de la vista "Libro"
+/// </summary>
 public class LibroController : Controller
 {
     private readonly ILibroService _libroService;
@@ -262,7 +265,7 @@ public class LibroController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["ClientesMensaje"] = message;
+            TempData["LibroMensajes"] = message;
         }
         catch (Exception ex)
         {
@@ -301,6 +304,11 @@ public class LibroController : Controller
         return PartialView("_LibrosTabla", librosPagedVM);
     }
 
+    /// <summary>
+    ///     Carga toda la lista de autores y categorías en el elemento <select></select> del formulario
+    /// </summary>
+    /// <param name="libroVM">El ViewModel a asignar en la vista.</param>
+    /// <returns>ViewModel con la lista de autores y categorías cargadas</returns>
     private async Task<LibroCreateVM> LoadAutoresCategoriasDropdownList(LibroCreateVM? libroVM = null)
     {
         IEnumerable<Autor> autores = await _autorService.GetAllAutores();

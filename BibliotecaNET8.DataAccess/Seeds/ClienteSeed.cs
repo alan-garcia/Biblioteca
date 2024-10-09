@@ -4,6 +4,9 @@ using BibliotecaNET8.Domain.Entities;
 
 namespace BibliotecaNET8.DataAccess.Seeds;
 
+/// <summary>
+///     Configuración de la entidad "Cliente" para insertar datos iniciales en la Base de datos
+/// </summary>
 public class ClienteSeed : IEntityTypeConfiguration<Cliente>
 {
     public void Configure(EntityTypeBuilder<Cliente> builder)

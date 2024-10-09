@@ -4,6 +4,9 @@ using FluentValidation;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "LibroCreate"
+    /// </summary>
     public class LibroCreateValidator : AbstractValidator<LibroCreateDTO>
     {
         public LibroCreateValidator()

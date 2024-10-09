@@ -1,5 +1,10 @@
 ﻿namespace BibliotecaNET8.Domain;
 
+/// <summary>
+///     Estructura de una entidad de tipo "paginada" a la hora de implementar el 
+///     filtro de búsqueda con paginación
+/// </summary>
+/// <typeparam name="T">La clase de tipo entidad a aplicar.</typeparam>
 public class PagedResult<T> where T : class
 {
     public IEnumerable<T> Items { get; set; } = new List<T>();

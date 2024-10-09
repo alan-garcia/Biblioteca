@@ -3,6 +3,9 @@ using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 
 namespace BibliotecaNET8.DataAccess.UnitOfWork.Impl;
 
+/// <summary>
+///     Aplicar el guardado de los cambios en la misma unidad de trabajo
+/// </summary>
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;

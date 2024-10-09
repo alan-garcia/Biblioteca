@@ -13,6 +13,9 @@ using Microsoft.Extensions.Localization;
 
 namespace BibliotecaNET8.Web.Controllers;
 
+/// <summary>
+///     Funcionalidades de la vista "Autor"
+/// </summary>
 public class AutorController : Controller
 {
     private readonly IAutorService _autorService;

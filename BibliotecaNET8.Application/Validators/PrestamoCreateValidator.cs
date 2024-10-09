@@ -4,6 +4,9 @@ using BibliotecaNET8.Application.DTOs.Prestamo;
 
 namespace BibliotecaNET8.Application.Validators
 {
+    /// <summary>
+    ///     Validaciones correspondientes a la entidad "PrestamoCreate"
+    /// </summary>
     public class PrestamoCreateValidator : AbstractValidator<PrestamoCreateDTO>
     {
         public PrestamoCreateValidator()

@@ -11,6 +11,7 @@ public class LibroCreateDTO
     public byte[]? Imagen { get; set; }
     public int AutorId { get; set; }
     public int CategoriaId { get; set; }
+
     public IEnumerable<SelectListItem> Autores { get; set; }
     public IEnumerable<SelectListItem> Categorias { get; set; }
 }
