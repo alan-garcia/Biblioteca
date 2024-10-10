@@ -42,14 +42,33 @@ else
                     <td scope="row" class="bbtctable-row-content">@prestamo.Libro.Titulo</td>
                     <td class="px-6 py-4">
                         <a asp-route="prestamoVer" asp-route-id="@prestamo.Id" class="bbtc-btn bbtc-btn-alternative mr-2">
-                            <icon href="view-icon" class="size-6"></icon> @Localizer["VerButton"]
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                            </svg>
+                            @Localizer["VerButton"]
                         </a>
                         <a asp-route="prestamoEdit" asp-route-id="@prestamo.Id" class="bbtc-btn bbtc-btn-info mr-2">
-                            <icon href="edit-icon" class="size-6"></icon> @Localizer["ModificarButton"]
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                <path d="M16 5l3 3" />
+                            </svg>
+                            @Localizer["ModificarButton"]
                         </a>
                         <a asp-route="prestamoDelete" asp-route-id="@prestamo.Id" onclick="Eliminar(this.href); return false;"
                             class="bbtc-btn bbtc-btn-delete-outline mr-2">
-                            <icon href="delete-icon" class="size-6"></icon> @Localizer["EliminarButton"]
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 7l16 0" />
+                                <path d="M10 11l0 6" />
+                                <path d="M14 11l0 6" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                            @Localizer["EliminarButton"]
                         </a>
                     </td>
                 </tr>
@@ -60,7 +79,15 @@ else
     <div class="my-4">
         <a asp-route="prestamoDeleteMultiple" onclick="EliminarSeleccionados(this.href); return false;"
            class="bbtc-btn bbtc-btn-delete-outline ml-2">
-            <icon href="delete-icon" class="size-6"></icon> @Localizer["EliminarSelectedButton"]
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 7l16 0" />
+                <path d="M10 11l0 6" />
+                <path d="M14 11l0 6" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+            </svg>
+            @Localizer["EliminarSelectedButton"]
         </a>
     </div>
 }

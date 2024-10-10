@@ -15,13 +15,13 @@
             <nav class="z-20 w-full border-b border-gray-200 bg-white bg-gray-200 shadow-md">
                 <div class="container mx-auto flex flex-wrap items-center justify-between p-4">
                     <a asp-route="home" class="flex items-center space-x-3">
-                        <icon href="books-icon" class="size-10 text-blue-500"></icon>
                         <span class="self-center whitespace-nowrap text-2xl font-semibold text-gray-600">Biblioteca</span>
                     </a>
                     <div class="flex space-x-3 md:order-2 md:space-x-0">
-                    <button onclick="menuResponsiveToggle(this)" data-collapse-toggle="navbar-sticky" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 p-2 text-sm text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-gray-200 md:hidden" aria-controls="navbar-sticky" aria-expanded="false">
-                            <span class="sr-only">Open main menu</span>
-                            <icon href="menu-icon" class="size-6"></icon>
+                        <button onclick="menuResponsiveToggle(this)" data-collapse-toggle="navbar-sticky" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-200 p-2 text-sm text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-gray-200 md:hidden" aria-controls="navbar-sticky" aria-expanded="false">
+                            <span class="sr-only">Abrir menú</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" />
+                            </svg>
                         </button>
                     </div>
                     <div class="nav-links hidden w-full items-center justify-end md:flex md:w-auto md:order-1" id="navbar-sticky">
@@ -45,8 +45,9 @@
                                 <a asp-route="prestamoIndex" class="bbtc-menu-option bg-transparent text-blue-500" aria-current="page">@Localizer["PrestamosMenuOption"]</a>
                             </li>
                             <li>
-                            <button id="dropdownNavbar" onclick="changeLanguageToggle();" data-dropdown-toggle="languageDropdown" class="bbtc-menu-dropdown bg-transparent text-blue-500">
-                                @Localizer["IdiomasMenuOption"] <icon href="chevron-down" class="relative left-1 top-1 size-6"></icon>
+                                <button id="dropdownNavbar" onclick="changeLanguageToggle();" data-dropdown-toggle="languageDropdown" class="bbtc-menu-dropdown bg-transparent text-blue-500">@Localizer["IdiomasMenuOption"]
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9l6 6l6 -6" />
+                                    </svg>
                                 </button>
                                 <!-- Dropdown menu -->
                                 <div id="languageDropdown" class="z-10 absolute hidden w-44 rounded-lg border bg-white font-normal shadow-md md:-translate-x-4 md:translate-y-4">

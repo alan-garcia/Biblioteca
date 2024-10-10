@@ -629,16 +629,8 @@ video {
   left: 0px;
 }
 
-.left-1 {
-  left: 0.25rem;
-}
-
 .start-0 {
   inset-inline-start: 0px;
-}
-
-.top-1 {
-  top: 0.25rem;
 }
 
 .top-3 {
@@ -753,11 +745,6 @@ video {
 
 .hidden {
   display: none;
-}
-
-.size-10 {
-  width: 2.5rem;
-  height: 2.5rem;
 }
 
 .size-6 {
