@@ -709,6 +709,24 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Anterior.
+        /// </summary>
+        public static string PaginaAnterior {
+            get {
+                return ResourceManager.GetString("PaginaAnterior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Siguiente.
+        /// </summary>
+        public static string PaginaSiguiente {
+            get {
+                return ResourceManager.GetString("PaginaSiguiente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Préstamo creado correctamente.
         /// </summary>
         public static string PrestamoCreadoMessageSuccess {
@@ -763,7 +781,7 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Buscar por nombre o apellido del cliente, o por título de libro.
+        ///   Busca una cadena traducida similar a Buscar por cliente, o por título de libro.
         /// </summary>
         public static string PrestamoSearchPlaceholder {
             get {

@@ -161,7 +161,7 @@ public class CategoriaController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["CategoriaMensajes"] = message;
+            TempData["CategoriasMensaje"] = message;
         }
         catch (Exception ex)
         {
@@ -193,7 +193,7 @@ public class CategoriaController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["CategoriaMensajes"] = message;
+            TempData["CategoriasMensaje"] = message;
         }
         catch (Exception ex)
         {

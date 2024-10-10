@@ -333,6 +333,12 @@
   <data name="ModificarPrestamoTitle" xml:space="preserve">
     <value>Modificar Préstamo</value>
   </data>
+  <data name="PaginaAnterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="PaginaSiguiente" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
   <data name="PrestamoCreadoMessageSuccess" xml:space="preserve">
     <value>Préstamo creado correctamente</value>
   </data>
@@ -352,7 +358,7 @@
     <value>Préstamo modificado correctamente</value>
   </data>
   <data name="PrestamoSearchPlaceholder" xml:space="preserve">
-    <value>Buscar por nombre o apellido del cliente, o por título de libro</value>
+    <value>Buscar por cliente, o por título de libro</value>
   </data>
   <data name="PrestamosMenuOption" xml:space="preserve">
     <value>Préstamos</value>

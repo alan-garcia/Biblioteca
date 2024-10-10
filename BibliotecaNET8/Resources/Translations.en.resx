@@ -333,6 +333,12 @@
   <data name="ModificarPrestamoTitle" xml:space="preserve">
     <value>Edit Loan</value>
   </data>
+  <data name="PaginaAnterior" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="PaginaSiguiente" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="PrestamoCreadoMessageSuccess" xml:space="preserve">
     <value>Loan created successfully</value>
   </data>
@@ -349,7 +355,7 @@
     <value>Loan modified successfully</value>
   </data>
   <data name="PrestamoSearchPlaceholder" xml:space="preserve">
-    <value>Search for name or lastname's customer, or by book title</value>
+    <value>Search for customer, or by book title</value>
   </data>
   <data name="PrestamosEliminadosMultipleMessageSuccess" xml:space="preserve">
     <value>Loans deleted successfully</value>

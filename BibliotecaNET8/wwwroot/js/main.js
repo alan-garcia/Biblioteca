@@ -1,5 +1,4 @@
-﻿
-function changeLanguageToggle() {
+﻿function changeLanguageToggle() {
     const dropdown = document.querySelector("#languageDropdown");
     dropdown.classList.toggle("hidden");
 }
@@ -10,21 +9,38 @@ function menuResponsiveToggle(e) {
 }
 
 function Eliminar(url) {
-    fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-        },
-        method: "POST"
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload();
-                console.log(`Mensaje: ${data.mensaje}`)
-            }
-        })
-        .catch(error => console.error(`Error: ${error}`));
+    Swal.fire({
+        title: "¿Seguro que quieres eliminar este registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json',
+                },
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: "Error",
+                    text: error.message,
+                    icon: "error"
+                });
+            });
+        }
+    });
 }
 
 function EliminarSeleccionados(url) {
@@ -34,28 +50,52 @@ function EliminarSeleccionados(url) {
         idsSeleccionados.push(checkbox.value);
     });
 
-    if (idsSeleccionados.length > 0) {
-        fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify(idsSeleccionados)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                    console.log(`Mensaje: ${data.mensaje}`)
-                }
-            })
-            .catch(error => console.error(`Error: ${error}`));
-    } else {
-        alert('Por favor, selecciona al menos un registro para eliminar.');
+    if (idsSeleccionados.length === 0) {
+        Swal.fire({
+            title: "¡Cuidado!",
+            text: "Por favor, selecciona al menos un registro para eliminar.",
+            icon: "warning"
+        });
     }
+    else {
+        Swal.fire({
+            title: "¿Seguro que quieres eliminar los registros seleccionados?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí",
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (idsSeleccionados.length > 0) {
+                    fetch(url, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        method: "POST",
+                        body: JSON.stringify(idsSeleccionados)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: "Error",
+                            text: error.message,
+                            icon: "error"
+                        });
+                    });
+                }
 
-    checkboxes.forEach((checkbox) => checkbox.checked = false);
+                checkboxes.forEach((checkbox) => checkbox.checked = false);
+            }
+        });
+    }
 }
 
 function Search(url) {

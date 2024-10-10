@@ -162,7 +162,7 @@ public class AutorController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["AutoresMensajes"] = message;
+            TempData["AutoresMensaje"] = message;
         }
         catch (Exception ex)
         {
@@ -194,7 +194,7 @@ public class AutorController : Controller
             }
 
             await _unitOfWork.Save();
-            TempData["AutoresMensajes"] = message;
+            TempData["AutoresMensaje"] = message;
         }
         catch (Exception ex)
         {

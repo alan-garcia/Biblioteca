@@ -7,7 +7,7 @@
 <div class="pagination">
     @if (genericModel.HasPreviousPage)
     {
-        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber - 1)" asp-route-pageSize="@genericModel.PageSize">Anterior</a>
+        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber - 1)" asp-route-pageSize="@genericModel.PageSize">@Localizer["PaginaAnterior"]</a>
     }
 
     @for (int i = 1; i <= genericModel.TotalPages; i++)
@@ -24,6 +24,6 @@
 
     @if (genericModel.HasNextPage)
     {
-        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber + 1)" asp-route-pageSize="@genericModel.PageSize">Siguiente</a>
+        <a asp-action="Index" asp-route-term="@ViewData["CurrentSearchTerm"]" asp-route-pageNumber="@(genericModel.PageNumber + 1)" asp-route-pageSize="@genericModel.PageSize">@Localizer["PaginaSiguiente"]</a>
     }
 </div>
