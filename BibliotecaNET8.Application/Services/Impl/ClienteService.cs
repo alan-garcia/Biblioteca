@@ -1,6 +1,7 @@
 ﻿using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
@@ -44,8 +45,7 @@ public class ClienteService : IClienteService
     /// <returns>El cliente correspondiente a su ID.</returns>
     public async Task<Cliente> GetClienteById(int? id)
     {
-        return await _clienteRepository.GetById(id)
-            ?? throw new Exception("Cliente no encontrado");
+        return await _clienteRepository.GetById(id);
     }
 
     /// <summary>
@@ -54,11 +54,6 @@ public class ClienteService : IClienteService
     /// <param name="cliente">El cliente.</param>
     public async Task AddCliente(Cliente cliente)
     {
-        if (cliente == null)
-        {
-            throw new Exception("No se pudo añadir al cliente");
-        }
-
         await _clienteRepository.Add(cliente);
     }
 
@@ -68,11 +63,6 @@ public class ClienteService : IClienteService
     /// <param name="cliente">El cliente.</param>
     public async Task UpdateCliente(Cliente cliente)
     {
-        if (cliente == null)
-        {
-            throw new Exception("No se pudo actualizar el cliente");
-        }
-
         await _clienteRepository.Update(cliente);
     }
 
@@ -85,7 +75,7 @@ public class ClienteService : IClienteService
     {
         if (id == null)
         {
-            throw new Exception("No se pudo borrar el cliente");
+            throw new CRUDException("No se pudo borrar el cliente");
         }
 
         return await _clienteRepository.Delete(id);
@@ -100,7 +90,7 @@ public class ClienteService : IClienteService
     {
         if (ids == null || ids.Length == 0)
         {
-            throw new Exception("No se pudo borrar múltiples clientes");
+            throw new CRUDException("No se pudo borrar múltiples clientes");
         }
 
         return await _clienteRepository.DeleteMultiple(ids);
@@ -119,7 +109,7 @@ public class ClienteService : IClienteService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de clientes");
+            throw new SearchException("Error en el filtro de búsqueda de clientes");
         }
     }
 
@@ -138,7 +128,7 @@ public class ClienteService : IClienteService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de clientes");
+            throw new SearchException("Error en el filtro de búsqueda de clientes");
         }
     }
 }

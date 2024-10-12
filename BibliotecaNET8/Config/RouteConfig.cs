@@ -19,6 +19,16 @@ public static class RouteConfig
             defaults: new { controller = "Home", action = "Index" });
 
         endpoints.MapControllerRoute(
+            name: "error",
+            pattern: "/Error",
+            defaults: new { controller = "Home", action = "Error" });
+
+        endpoints.MapControllerRoute(
+            name: "statusCode",
+            pattern: "/StatusCode/{code?}",
+            defaults: new { controller = "Home", action = "StatusCode" });
+
+        endpoints.MapControllerRoute(
             name: "setLanguage",
             pattern: "/SetLanguage/{culture}",
             defaults: new { controller = "Home", action = "SetLanguage" });

@@ -10,6 +10,7 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Web.ViewModels.Cliente;
 using BibliotecaNET8.Application.DTOs.Cliente;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
+using BibliotecaNET8.Domain.Exceptions;
 
 namespace BibliotecaNET8.Web.Controllers;
 
@@ -85,7 +86,7 @@ public class ClienteController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
 
@@ -100,13 +101,17 @@ public class ClienteController : Controller
         try
         {
             Cliente? cliente = await _clienteService.GetClienteById(id);
-            ClienteVM clienteVM = _mapper.Map<ClienteVM>(source: cliente);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
 
+            ClienteVM clienteVM = _mapper.Map<ClienteVM>(source: cliente);
             return View(clienteVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -116,13 +121,17 @@ public class ClienteController : Controller
         try
         {
             Cliente? cliente = await _clienteService.GetClienteById(id);
-            ClienteVM clienteVM = _mapper.Map<ClienteVM>(source: cliente);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
 
+            ClienteVM clienteVM = _mapper.Map<ClienteVM>(source: cliente);
             return View(clienteVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -133,12 +142,19 @@ public class ClienteController : Controller
         var result = await _clienteValidator.ValidateAsync(clienteDTO);
         if (result.IsValid)
         {
-            Cliente? cliente = _mapper.Map<Cliente>(source: clienteDTO);
-            await _clienteService.UpdateCliente(cliente);
-            await _unitOfWork.Save();
-            TempData["ClientesMensaje"] = _localizer["ClienteModificadoMessageSuccess"].Value;
+            try
+            {
+                Cliente? cliente = _mapper.Map<Cliente>(source: clienteDTO);
+                await _clienteService.UpdateCliente(cliente);
+                await _unitOfWork.Save();
+                TempData["ClientesMensaje"] = _localizer["ClienteModificadoMessageSuccess"].Value;
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         result.AddToModelState(ModelState);
@@ -168,7 +184,7 @@ public class ClienteController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar el cliente: {ex.Message}");
+            throw new CRUDException($"Error al eliminar el cliente: {ex.Message}");
         }
 
         return Json(new
@@ -200,7 +216,7 @@ public class ClienteController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar múltiples clientes: {ex.Message}");
+            throw new CRUDException($"Error al eliminar múltiples clientes: {ex.Message}");
         }
 
         return Json(new
@@ -226,7 +242,7 @@ public class ClienteController : Controller
         }
         catch (Exception)
         {
-            throw new Exception("Error al buscar categorías");
+            throw new SearchException("Error al buscar categorías");
         }
 
         PagedResult<Cliente> pagedResult = await _clienteService.GetRecordsPagedResult(filtroClientes, pageNumber, pageSize);

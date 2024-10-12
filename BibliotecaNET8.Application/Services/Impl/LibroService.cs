@@ -1,6 +1,7 @@
 ﻿using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -45,8 +46,7 @@ public class LibroService : ILibroService
     /// <returns>El libro correspondiente a su ID.</returns>
     public async Task<Libro> GetLibroById(int? id)
     {
-        return await _libroRepository.GetById(id)
-            ?? throw new Exception("Libro no encontrado");
+        return await _libroRepository.GetById(id);
     }
 
     /// <summary>
@@ -55,11 +55,6 @@ public class LibroService : ILibroService
     /// <param name="libro">El libro.</param>
     public async Task AddLibro(Libro libro)
     {
-        if (libro == null)
-        {
-            throw new Exception("No se pudo añadir al libro");
-        }
-
         await _libroRepository.Add(libro);
     }
 
@@ -69,11 +64,6 @@ public class LibroService : ILibroService
     /// <param name="libro">El libro.</param>
     public async Task UpdateLibro(Libro libro)
     {
-        if (libro == null)
-        {
-            throw new Exception("No se pudo actualizar el libro");
-        }
-
         await _libroRepository.Update(libro);
     }
 
@@ -86,7 +76,7 @@ public class LibroService : ILibroService
     {
         if (id == null)
         {
-            throw new Exception("No se pudo borrar el libro");
+            throw new CRUDException("No se pudo borrar el libro");
         }
 
         return await _libroRepository.Delete(id);
@@ -101,7 +91,7 @@ public class LibroService : ILibroService
     {
         if (ids == null || ids.Length == 0)
         {
-            throw new Exception("No se pudo borrar múltiples libros");
+            throw new CRUDException("No se pudo borrar múltiples libros");
         }
 
         return await _libroRepository.DeleteMultiple(ids);
@@ -120,7 +110,7 @@ public class LibroService : ILibroService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de libros");
+            throw new SearchException("Error en el filtro de búsqueda de libros");
         }
     }
 
@@ -139,7 +129,7 @@ public class LibroService : ILibroService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de libros");
+            throw new SearchException("Error en el filtro de búsqueda de libros");
         }
     }
 

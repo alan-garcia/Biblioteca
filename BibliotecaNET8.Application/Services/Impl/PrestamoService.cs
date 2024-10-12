@@ -1,6 +1,7 @@
 ﻿using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
@@ -44,8 +45,7 @@ public class PrestamoService : IPrestamoService
     /// <returns>El préstamo correspondiente a su ID.</returns>
     public async Task<Prestamo> GetPrestamoById(int? id)
     {
-        return await _prestamoRepository.GetById(id)
-            ?? throw new Exception("Préstamo no encontrado");
+        return await _prestamoRepository.GetById(id);
     }
 
     /// <summary>
@@ -54,11 +54,6 @@ public class PrestamoService : IPrestamoService
     /// <param name="prestamo">El préstamo.</param>
     public async Task AddPrestamo(Prestamo prestamo)
     {
-        if (prestamo == null)
-        {
-            throw new Exception("No se pudo añadir el préstamo");
-        }
-
         await _prestamoRepository.Add(prestamo);
     }
 
@@ -68,11 +63,6 @@ public class PrestamoService : IPrestamoService
     /// <param name="prestamo">El préstamo.</param>
     public async Task UpdatePrestamo(Prestamo prestamo)
     {
-        if (prestamo == null)
-        {
-            throw new Exception("No se pudo actualizar el préstamo");
-        }
-
         await _prestamoRepository.Update(prestamo);
     }
 
@@ -85,7 +75,7 @@ public class PrestamoService : IPrestamoService
     {
         if (id == null)
         {
-            throw new Exception("No se pudo borrar el préstamo");
+            throw new CRUDException("No se pudo borrar el préstamo");
         }
 
         return await _prestamoRepository.Delete(id);
@@ -100,7 +90,7 @@ public class PrestamoService : IPrestamoService
     {
         if (ids == null || ids.Length == 0)
         {
-            throw new Exception("No se pudo borrar múltiples préstamos");
+            throw new CRUDException("No se pudo borrar múltiples préstamos");
         }
 
         return await _prestamoRepository.DeleteMultiple(ids);
@@ -119,7 +109,7 @@ public class PrestamoService : IPrestamoService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de préstamo");
+            throw new SearchException("Error en el filtro de búsqueda de préstamo");
         }
     }
 
@@ -138,7 +128,7 @@ public class PrestamoService : IPrestamoService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de préstamo");
+            throw new SearchException("Error en el filtro de búsqueda de préstamo");
         }
     }
 

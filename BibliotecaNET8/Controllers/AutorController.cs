@@ -3,6 +3,7 @@ using BibliotecaNET8.Application.DTOs.Autor;
 using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using BibliotecaNET8.Infrastructure.Utils;
 using BibliotecaNET8.Web.ViewModels.Autor;
@@ -83,7 +84,7 @@ public class AutorController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
 
@@ -98,13 +99,17 @@ public class AutorController : Controller
         try
         {
             Autor autor = await _autorService.GetAutorById(id);
-            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
+            if (autor == null)
+            {
+                return NotFound();
+            }
 
+            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
             return View(autorVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -114,13 +119,17 @@ public class AutorController : Controller
         try
         {
             Autor autor = await _autorService.GetAutorById(id);
-            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
+            if (autor == null)
+            {
+                return NotFound();
+            }
 
+            AutorVM autorVM = _mapper.Map<AutorVM>(source: autor);
             return View(autorVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -131,12 +140,19 @@ public class AutorController : Controller
         var result = await _autorValidator.ValidateAsync(autorDTO);
         if (result.IsValid)
         {
-            Autor autor = _mapper.Map<Autor>(source: autorDTO);
-            await _autorService.UpdateAutor(autor);
-            await _unitOfWork.Save();
-            TempData["AutoresMensaje"] = _localizer["AutorModificadoMessageSuccess"].Value;
+            try
+            {
+                Autor autor = _mapper.Map<Autor>(source: autorDTO);
+                await _autorService.UpdateAutor(autor);
+                await _unitOfWork.Save();
+                TempData["AutoresMensaje"] = _localizer["AutorModificadoMessageSuccess"].Value;
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         result.AddToModelState(ModelState);
@@ -166,7 +182,7 @@ public class AutorController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar el autor: {ex.Message}");
+            throw new CRUDException($"Error al eliminar el autor: {ex.Message}");
         }
 
         return Json(new
@@ -198,7 +214,7 @@ public class AutorController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar múltiples autores: {ex.Message}");
+            throw new CRUDException($"Error al eliminar múltiples autores: {ex.Message}");
         }
 
         return Json(new
@@ -222,7 +238,7 @@ public class AutorController : Controller
         }
         catch (Exception)
         {
-            throw new Exception("Error al buscar autores");
+            throw new SearchException("Error al buscar autores");
         }
 
         PagedResult<Autor> pagedResult = await _autorService.GetRecordsPagedResult(filtroAutores, pageNumber, pageSize);

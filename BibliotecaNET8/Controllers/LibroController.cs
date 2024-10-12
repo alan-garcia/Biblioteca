@@ -3,6 +3,7 @@ using BibliotecaNET8.Application.DTOs.Libro;
 using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using BibliotecaNET8.Infrastructure.Utils;
 using BibliotecaNET8.Web.ViewModels.Libro;
@@ -107,7 +108,7 @@ public class LibroController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
 
@@ -123,6 +124,10 @@ public class LibroController : Controller
         try
         {
             Libro libro = await _libroService.GetLibroById(id);
+            if (libro == null)
+            {
+                return NotFound();
+            }
 
             LibroCreateVM libroVM = await LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
@@ -137,7 +142,7 @@ public class LibroController : Controller
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -148,6 +153,10 @@ public class LibroController : Controller
         try
         {
             Libro libro = await _libroService.GetLibroById(id);
+            if (libro == null)
+            {
+                return NotFound();
+            }
 
             libroVM = await LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
@@ -166,7 +175,7 @@ public class LibroController : Controller
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
 
         return View(libroVM);
@@ -202,7 +211,7 @@ public class LibroController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
         else
@@ -237,7 +246,7 @@ public class LibroController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar el libro: {ex.Message}");
+            throw new CRUDException($"Error al eliminar el libro: {ex.Message}");
         }
         
         return Json(new
@@ -269,7 +278,7 @@ public class LibroController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar múltiples clientes: {ex.Message}");
+            throw new CRUDException($"Error al eliminar múltiples clientes: {ex.Message}");
         }
 
         return Json(new
@@ -295,7 +304,7 @@ public class LibroController : Controller
         }
         catch (Exception)
         {
-            throw new Exception("Error al buscar libros");
+            throw new SearchException("Error al buscar libros");
         }
 
         PagedResult<Libro> pagedResult = await _libroService.GetRecordsPagedResult(filtroLibrosSearch, pageNumber, pageSize);

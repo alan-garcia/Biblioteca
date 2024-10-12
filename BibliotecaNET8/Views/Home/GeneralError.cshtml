@@ -1,0 +1,19 @@
+﻿@model ErrorVM
+
+<section class="bg-white">
+    <div class="mx-auto max-w-screen-xl px-4 py-8 text-center lg:py-16">
+        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-8xl">@Model.StatusCode</h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 sm:px-16 lg:text-xl lg:px-48">@Model.Message</p>
+        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+            <a onclick="history.back()" class="bbtc-btn bbtc-btn-info cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l14 0" />
+                    <path d="M5 12l6 6" />
+                    <path d="M5 12l6 -6" />
+                </svg>
+                @Localizer["VolverButton"]
+            </a>
+        </div>
+    </div>
+</section>

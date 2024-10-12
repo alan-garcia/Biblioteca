@@ -1,6 +1,7 @@
 ﻿using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
@@ -44,8 +45,7 @@ public class AutorService : IAutorService
     /// <returns>El autor correspondiente a su ID.</returns>
     public async Task<Autor> GetAutorById(int? id)
     {
-        return await _autorRepository.GetById(id)
-            ?? throw new Exception("Autor no encontrado");
+        return await _autorRepository.GetById(id);
     }
 
     /// <summary>
@@ -54,11 +54,6 @@ public class AutorService : IAutorService
     /// <param name="autor">El autor.</param>
     public async Task AddAutor(Autor autor)
     {
-        if (autor == null)
-        {
-            throw new Exception("No se pudo añadir al autor");
-        }
-
         await _autorRepository.Add(autor);
     }
 
@@ -68,11 +63,6 @@ public class AutorService : IAutorService
     /// <param name="autor">El autor.</param>
     public async Task UpdateAutor(Autor autor)
     {
-        if (autor == null)
-        {
-            throw new Exception("No se pudo actualizar el autor");
-        }
-
         await _autorRepository.Update(autor);
     }
 
@@ -85,7 +75,7 @@ public class AutorService : IAutorService
     {
         if (id == null)
         {
-            throw new Exception("No se pudo borrar al autor");
+            throw new CRUDException("No se pudo borrar al autor");
         }
 
         return await _autorRepository.Delete(id);
@@ -100,7 +90,7 @@ public class AutorService : IAutorService
     {
         if (ids == null || ids.Length == 0)
         {
-            throw new Exception("No se pudo borrar múltiples autores");
+            throw new CRUDException("No se pudo borrar múltiples autores");
         }
 
         return await _autorRepository.DeleteMultiple(ids);
@@ -119,7 +109,7 @@ public class AutorService : IAutorService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de autores");
+            throw new SearchException("Error en el filtro de búsqueda de autores");
         }
     }
 
@@ -138,7 +128,7 @@ public class AutorService : IAutorService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de autores");
+            throw new SearchException("Error en el filtro de búsqueda de autores");
         }
     }
 }

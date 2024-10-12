@@ -11,6 +11,7 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Web.ViewModels.Prestamo;
 using BibliotecaNET8.Application.DTOs.Prestamo;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
+using BibliotecaNET8.Domain.Exceptions;
 
 namespace BibliotecaNET8.Web.Controllers;
 
@@ -100,7 +101,7 @@ public class PrestamoController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
 
@@ -116,6 +117,10 @@ public class PrestamoController : Controller
         try
         {
             Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
+            if (prestamo == null)
+            {
+                return NotFound();
+            }
 
             PrestamoCreateVM prestamoVM = await LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
@@ -128,7 +133,7 @@ public class PrestamoController : Controller
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -139,6 +144,10 @@ public class PrestamoController : Controller
         try
         {
             Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
+            if (prestamo == null)
+            {
+                return NotFound();
+            }
 
             prestamoVM = await LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
@@ -155,7 +164,7 @@ public class PrestamoController : Controller
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
 
         return View(prestamoVM);
@@ -168,12 +177,19 @@ public class PrestamoController : Controller
         var result = await _prestamoValidator.ValidateAsync(prestamoDTO);
         if (result.IsValid)
         {
-            Prestamo? prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
-            await _prestamoService.UpdatePrestamo(prestamo);
-            await _unitOfWork.Save();
-            TempData["PrestamoMensajes"] = _localizer["PrestamoModificadoMessageSuccess"].Value;
+            try
+            {
+                Prestamo prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
+                await _prestamoService.UpdatePrestamo(prestamo);
+                await _unitOfWork.Save();
+                TempData["PrestamoMensajes"] = _localizer["PrestamoModificadoMessageSuccess"].Value;
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         result.AddToModelState(ModelState);
@@ -203,7 +219,7 @@ public class PrestamoController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar el préstamo: {ex.Message}");
+            throw new CRUDException($"Error al eliminar el préstamo: {ex.Message}");
         }
 
         return Json(new
@@ -235,7 +251,7 @@ public class PrestamoController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar múltiples préstamos: {ex.Message}");
+            throw new CRUDException($"Error al eliminar múltiples préstamos: {ex.Message}");
         }
 
         return Json(new
@@ -262,7 +278,7 @@ public class PrestamoController : Controller
         }
         catch (Exception)
         {
-            throw new Exception("Error al buscar préstamos");
+            throw new SearchException("Error al buscar préstamos");
         }
 
         PagedResult<Prestamo> pagedResult = await _prestamoService.GetRecordsPagedResult(filtroPrestamosSearch, pageNumber, pageSize);

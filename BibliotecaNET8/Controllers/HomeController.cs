@@ -1,3 +1,5 @@
+using BibliotecaNET8.Web.ViewModels;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,5 +37,35 @@ public class HomeController : Controller
         );
 
         return LocalRedirect(returnUrl ?? "/");
+    }
+
+    /// <summary>
+    ///     Maneja los errores generales (500, excepciones no controladas).
+    /// </summary>
+    /// <returns>La vista con el error.</returns>
+    public IActionResult Error()
+    {
+        var error = HttpContext.Features.Get<IExceptionHandlerFeature>();
+        return View(new ErrorVM { Message = "Ocurrió un problema", ErrorDetails = error?.Error.Message });
+    }
+
+    /// <summary>
+    ///     Maneja los códigos de estado.
+    /// </summary>
+    /// <param name="code">Número correspondiente al código de estado.</param>
+    /// <returns>Nombre de la vista correspondiente al código de estado.</returns>
+    public IActionResult StatusCode(int code)
+    {
+        switch (code)
+        {
+            case 401:
+                return View("401");
+            case 403:
+                return View("403");
+            case 404:
+                return View("404", new ErrorVM { Message = "La página solicitada no existe", StatusCode = code });
+            default:
+                return View("GeneralError", new ErrorVM { Message = "Ocurrió un problema", StatusCode = code });
+        }
     }
 }

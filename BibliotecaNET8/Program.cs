@@ -2,6 +2,7 @@ using BibliotecaNET8.Application.MappingProfiles;
 using BibliotecaNET8.Infrastructure;
 using BibliotecaNET8.Web.Config;
 using BibliotecaNET8.Web.MappingProfiles;
+using BibliotecaNET8.Web.Middlewares;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 
@@ -33,14 +34,21 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+/* Middleware que intercepta los códigos de estado, y redirige a una acción en el controlador "Home"
+ * llamada "StatusCode", pasando el código de estado como un parámetro. */
+app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+
+app.UseExceptionHandler("/Home/Error");
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorDatabaseMiddleware>();
 
 // Registra las rutas de la aplicación
 app.RegisterRoutes();

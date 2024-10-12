@@ -1,6 +1,7 @@
 ﻿using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
@@ -44,8 +45,7 @@ public class CategoriaService : ICategoriaService
     /// <returns>La categoría correspondiente a su ID.</returns>
     public async Task<Categoria> GetCategoriaById(int? id)
     {
-        return await _categoriaRepository.GetById(id)
-            ?? throw new Exception("Categoria no encontrada");
+        return await _categoriaRepository.GetById(id);
     }
 
     /// <summary>
@@ -54,11 +54,6 @@ public class CategoriaService : ICategoriaService
     /// <param name="categoria">La categoría.</param>
     public async Task AddCategoria(Categoria categoria)
     {
-        if (categoria == null)
-        {
-            throw new Exception("No se pudo añadir la categoría");
-        }
-
         await _categoriaRepository.Add(categoria);
     }
 
@@ -68,11 +63,6 @@ public class CategoriaService : ICategoriaService
     /// <param name="categoria">La categoría.</param>
     public async Task UpdateCategoria(Categoria categoria)
     {
-        if (categoria == null)
-        {
-            throw new Exception("No se pudo actualizar la categoría");
-        }
-
         await _categoriaRepository.Update(categoria);
     }
 
@@ -85,7 +75,7 @@ public class CategoriaService : ICategoriaService
     {
         if (id == null)
         {
-            throw new Exception("No se pudo borrar la categoría");
+            throw new CRUDException("No se pudo borrar la categoría");
         }
 
         return await _categoriaRepository.Delete(id);
@@ -100,7 +90,7 @@ public class CategoriaService : ICategoriaService
     {
         if (ids == null || ids.Length == 0)
         {
-            throw new Exception("No se pudo borrar múltiples categorías");
+            throw new CRUDException("No se pudo borrar múltiples categorías");
         }
 
         return await _categoriaRepository.DeleteMultiple(ids);
@@ -119,7 +109,7 @@ public class CategoriaService : ICategoriaService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de categorías");
+            throw new SearchException("Error en el filtro de búsqueda de categorías");
         }
     }
 
@@ -138,7 +128,7 @@ public class CategoriaService : ICategoriaService
         }
         catch (Exception)
         {
-            throw new Exception("Error en el filtro de búsqueda de categorías");
+            throw new SearchException("Error en el filtro de búsqueda de categorías");
         }
     }
 }

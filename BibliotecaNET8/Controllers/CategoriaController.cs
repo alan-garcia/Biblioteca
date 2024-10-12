@@ -3,6 +3,7 @@ using BibliotecaNET8.Application.DTOs.Categoria;
 using BibliotecaNET8.Application.Services.Interfaces;
 using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
+using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using BibliotecaNET8.Infrastructure.Utils;
 using BibliotecaNET8.Web.ViewModels.Categoria;
@@ -73,7 +74,7 @@ public class CategoriaController : Controller
         {
             try
             {
-                Categoria? categoria = _mapper.Map<Categoria>(source: categoriaDTO);
+                Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
                 await _categoriaService.AddCategoria(categoria);
                 await _unitOfWork.Save();
                 TempData["CategoriasMensaje"] = _localizer["CategoriaCreadaMessageSuccess"].Value;
@@ -82,7 +83,7 @@ public class CategoriaController : Controller
             }
             catch (Exception)
             {
-                return View("404");
+                return NotFound();
             }
         }
 
@@ -97,13 +98,17 @@ public class CategoriaController : Controller
         try
         {
             Categoria categoria = await _categoriaService.GetCategoriaById(id);
-            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
+            if (categoria == null)
+            {
+                return NotFound();
+            }
 
+            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
             return View(categoriaVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -113,13 +118,17 @@ public class CategoriaController : Controller
         try
         {
             Categoria categoria = await _categoriaService.GetCategoriaById(id);
-            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
+            if (categoria == null)
+            {
+                return NotFound();
+            }
 
+            CategoriaVM categoriaVM = _mapper.Map<CategoriaVM>(source: categoria);
             return View(categoriaVM);
         }
         catch (Exception)
         {
-            return View("404");
+            return NotFound();
         }
     }
 
@@ -130,12 +139,19 @@ public class CategoriaController : Controller
         var result = await _categoriaValidator.ValidateAsync(categoriaDTO);
         if (result.IsValid)
         {
-            Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
-            await _categoriaService.UpdateCategoria(categoria);
-            await _unitOfWork.Save();
-            TempData["CategoriasMensaje"] = _localizer["CategoriaModificadaMessageSuccess"].Value;
+            try
+            {
+                Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
+                await _categoriaService.UpdateCategoria(categoria);
+                await _unitOfWork.Save();
+                TempData["CategoriasMensaje"] = _localizer["CategoriaModificadaMessageSuccess"].Value;
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         result.AddToModelState(ModelState);
@@ -165,7 +181,7 @@ public class CategoriaController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar la categoría: {ex.Message}");
+            throw new CRUDException($"Error al eliminar la categoría: {ex.Message}");
         }
 
         return Json(new
@@ -197,7 +213,7 @@ public class CategoriaController : Controller
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error al eliminar múltiples categoría: {ex.Message}");
+            throw new CRUDException($"Error al eliminar múltiples categoría: {ex.Message}");
         }
 
         return Json(new
@@ -220,7 +236,7 @@ public class CategoriaController : Controller
         }
         catch (Exception)
         {
-            throw new Exception("Error al buscar categorías");
+            throw new SearchException("Error al buscar categorías");
         }
 
         PagedResult<Categoria> pagedResult = await _categoriaService.GetRecordsPagedResult(filtroCategorias, pageNumber, pageSize);
