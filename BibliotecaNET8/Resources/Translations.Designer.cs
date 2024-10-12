@@ -529,6 +529,15 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La imagen debe ser menor a 2 MB.
+        /// </summary>
+        public static string LibroImageUploadSize {
+            get {
+                return ResourceManager.GetString("LibroImageUploadSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Libro modificado correctamente.
         /// </summary>
         public static string LibroModificadoMessageSuccess {

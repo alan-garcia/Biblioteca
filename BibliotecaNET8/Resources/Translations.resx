@@ -273,6 +273,9 @@
   <data name="LibroEliminadoMultipleMessageSuccess" xml:space="preserve">
     <value>Libros eliminados correctamente</value>
   </data>
+  <data name="LibroImageUploadSize" xml:space="preserve">
+    <value>La imagen debe ser menor a 2 MB</value>
+  </data>
   <data name="LibroModificadoMessageSuccess" xml:space="preserve">
     <value>Libro modificado correctamente</value>
   </data>

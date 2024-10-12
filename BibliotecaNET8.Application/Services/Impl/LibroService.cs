@@ -150,13 +150,13 @@ public class LibroService : ILibroService
     /// <returns>Una tupla con la entidad "Libro" y un valor "string" con el mensaje de la validación en caso de superar 
     /// el tamaño máximo admitido a la hora de cargar la imagen (si se diera el caso). En caso contrario, no mostrará ningún mensaje,
     /// devolviendo un valor 'null'.</returns>
-    public async Task<(Libro?, string?)> SetBinaryImage(IFormFile? Imagen, Libro? libro, string? ImagenActual = null)
+    public async Task<(Libro?, bool)> SetBinaryImage(IFormFile? Imagen, Libro? libro, string? ImagenActual = null)
     {
         if (Imagen?.Length > 0)
         {
-            if (Imagen.Length > 2097152) // 2MB en bytes
+            if (Imagen.Length > 2_097_152)
             {
-                return (null, "La imagen debe ser menor a 2 MB.");
+                return (null, true);
             }
 
             await using var memoryStream = new MemoryStream();
@@ -168,6 +168,6 @@ public class LibroService : ILibroService
             libro.Imagen = Convert.FromBase64String(ImagenActual);
         }
 
-        return (libro, null);
+        return (libro, false);
     }
 }

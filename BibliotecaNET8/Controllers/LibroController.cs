@@ -92,10 +92,10 @@ public class LibroController : Controller
             try
             {
                 Libro libro = _mapper.Map<Libro>(source: libroDTO);
-                var (libroFinal, errorMensaje) = await _libroService.SetBinaryImage(Imagen, libro);
-                if (errorMensaje != null)
+                var (libroFinal, hasError) = await _libroService.SetBinaryImage(Imagen, libro);
+                if (hasError)
                 {
-                    ModelState.AddModelError("Imagen", errorMensaje);
+                    ModelState.AddModelError("Imagen", _localizer["LibroImageUploadSize"]);
                     libroVM = await LoadAutoresCategoriasDropdownList();
                     return View(libroVM);
                 }
@@ -191,10 +191,10 @@ public class LibroController : Controller
             try
             {
                 Libro libro = _mapper.Map<Libro>(source: libroDTO);
-                var (libroFinal, errorMensaje) = await _libroService.SetBinaryImage(Imagen, libro, ImagenActual);
-                if (errorMensaje != null)
+                var (libroFinal, hasError) = await _libroService.SetBinaryImage(Imagen, libro, ImagenActual);
+                if (hasError)
                 {
-                    ModelState.AddModelError("Imagen", errorMensaje);
+                    ModelState.AddModelError("Imagen", _localizer["LibroImageUploadSize"]);
                     libroVM = await LoadAutoresCategoriasDropdownList();
                     if (!string.IsNullOrEmpty(ImagenActual))
                     {

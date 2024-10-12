@@ -17,5 +17,5 @@ public interface ILibroService
     public IQueryable<Libro> SearchLibro(Expression<Func<Libro, bool>> predicate);
     public IQueryable<Libro> SearchLibro(IQueryable<Libro> queryType, Expression<Func<Libro, bool>> predicate);
     public IQueryable<Libro> GetLibrosConAutoresCategorias();
-    public Task<(Libro?, string?)> SetBinaryImage(IFormFile? Imagen, Libro? libro, string? ImagenActual = null);
+    public Task<(Libro?, bool)> SetBinaryImage(IFormFile? Imagen, Libro? libro, string? ImagenActual = null);
 }
