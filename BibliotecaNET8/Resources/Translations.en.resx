@@ -369,6 +369,12 @@
   <data name="PrestamosSearchNotFound" xml:space="preserve">
     <value>Loans not found with this term</value>
   </data>
+  <data name="PrimeraPagina" xml:space="preserve">
+    <value>First page</value>
+  </data>
+  <data name="UltimaPagina" xml:space="preserve">
+    <value>Last page</value>
+  </data>
   <data name="VerAutorTitle" xml:space="preserve">
     <value>Show Author</value>
   </data>

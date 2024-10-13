@@ -12,6 +12,8 @@ public class PagedResult<T> where T : class
     public int TotalPages { get; set; }
     public int PageSize { get; set; }
     public int TotalItems { get; set; }
+    public int StartPage { get; set; }
+    public int EndPage { get; set; }
 
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;

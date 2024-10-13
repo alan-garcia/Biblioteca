@@ -20,6 +20,20 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseE
         where T : class
     {
         int totalItems = await records.CountAsync();
+        int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+        // Definir cuántas páginas visibles mostrar
+        int maxPagesToShow = 5;
+
+        // Calcular el rango de páginas a mostrar
+        int startPage = Math.Max(1, pageNumber - maxPagesToShow / 2);
+        int endPage = Math.Min(totalPages, startPage + maxPagesToShow - 1);
+
+        // Si hay pocas páginas al principio, ajusta el rango
+        if (endPage - startPage < maxPagesToShow - 1)
+        {
+            startPage = Math.Max(1, endPage - maxPagesToShow + 1);
+        }
 
         List<T> recordsPaged = await records
             .Skip((pageNumber - 1) * pageSize)
@@ -31,7 +45,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseE
             PageNumber = pageNumber,
             PageSize = pageSize,
             TotalItems = totalItems,
-            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+            TotalPages = totalPages,
+            StartPage = startPage,
+            EndPage = endPage,
             Items = recordsPaged
         };
     }

@@ -817,6 +817,24 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Primera página.
+        /// </summary>
+        public static string PrimeraPagina {
+            get {
+                return ResourceManager.GetString("PrimeraPagina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Última página.
+        /// </summary>
+        public static string UltimaPagina {
+            get {
+                return ResourceManager.GetString("UltimaPagina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ver Autor.
         /// </summary>
         public static string VerAutorTitle {
