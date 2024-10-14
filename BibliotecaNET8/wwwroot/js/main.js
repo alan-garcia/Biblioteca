@@ -103,9 +103,8 @@ function Search(url) {
     term = term ? term : "all";
 
     fetch(`${url}/${term}`)
-        .then(response => response.text()) // Obtenemos el HTML parcial como texto
+        .then(response => response.text())
         .then(html => {
-            // Reemplaza el contenido del cuerpo de la tabla con los resultados filtrados
             document.getElementById('dataBody').innerHTML = html;
         })
         .catch(error => {
