@@ -671,10 +671,6 @@ video {
   margin-bottom: 0.5rem;
 }
 
-.mb-32 {
-  margin-bottom: 8rem;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1468,11 +1464,6 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:-mx-6 {
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-  }
-
   .sm\:mx-6 {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
@@ -1601,11 +1592,6 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:-mx-8 {
-    margin-left: -2rem;
-    margin-right: -2rem;
-  }
-
   .lg\:mx-8 {
     margin-left: 2rem;
     margin-right: 2rem;

@@ -826,6 +826,78 @@ namespace BibliotecaNET8.Web.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No.
+        /// </summary>
+        public static string SWDeleteMultipleNoButton {
+            get {
+                return ResourceManager.GetString("SWDeleteMultipleNoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que quieres eliminar los registros seleccionados?.
+        /// </summary>
+        public static string SWDeleteMultipleTitleConfirm {
+            get {
+                return ResourceManager.GetString("SWDeleteMultipleTitleConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sí.
+        /// </summary>
+        public static string SWDeleteMultipleYesButton {
+            get {
+                return ResourceManager.GetString("SWDeleteMultipleYesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No.
+        /// </summary>
+        public static string SWDeleteNoButton {
+            get {
+                return ResourceManager.GetString("SWDeleteNoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Por favor, selecciona al menos un registro para eliminar.
+        /// </summary>
+        public static string SWDeleteNoRecordSelectedText {
+            get {
+                return ResourceManager.GetString("SWDeleteNoRecordSelectedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Cuidado!.
+        /// </summary>
+        public static string SWDeleteNoRecordSelectedTitle {
+            get {
+                return ResourceManager.GetString("SWDeleteNoRecordSelectedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Seguro que quieres eliminar este registro?.
+        /// </summary>
+        public static string SWDeleteTitleConfirm {
+            get {
+                return ResourceManager.GetString("SWDeleteTitleConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sí.
+        /// </summary>
+        public static string SWDeleteYesButton {
+            get {
+                return ResourceManager.GetString("SWDeleteYesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Última página.
         /// </summary>
         public static string UltimaPagina {

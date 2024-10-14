@@ -10,13 +10,13 @@ function menuResponsiveToggle(e) {
 
 function Eliminar(url) {
     Swal.fire({
-        title: "¿Seguro que quieres eliminar este registro?",
+        title: translations.deleteConfirmTitle,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Sí",
-        cancelButtonText: 'No'
+        confirmButtonText: translations.deleteYesButton,
+        cancelButtonText: translations.deleteNoButton
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(url, {
@@ -52,20 +52,20 @@ function EliminarSeleccionados(url) {
 
     if (idsSeleccionados.length === 0) {
         Swal.fire({
-            title: "¡Cuidado!",
-            text: "Por favor, selecciona al menos un registro para eliminar.",
+            title: translations.deleteNoRecordSelectedTitle,
+            text: translations.deleteNoRecordSelectedText,
             icon: "warning"
         });
     }
     else {
         Swal.fire({
-            title: "¿Seguro que quieres eliminar los registros seleccionados?",
+            title: translations.deleteMultipleConfirmTitle,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Sí",
-            cancelButtonText: 'No'
+            confirmButtonText: translations.deleteMultipleYesButton,
+            cancelButtonText: translations.deleteMultipleNoButton
         }).then((result) => {
             if (result.isConfirmed) {
                 if (idsSeleccionados.length > 0) {

@@ -81,6 +81,18 @@
 
         <script src="~/js/main.js" asp-append-version="true"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+            var translations = {
+                deleteConfirmTitle: '@Localizer["SWDeleteTitleConfirm"]',
+                deleteYesButton: '@Localizer["SWDeleteYesButton"]',
+                deleteNoButton: '@Localizer["SWDeleteNoButton"]',
+                deleteMultipleConfirmTitle: '@Localizer["SWDeleteMultipleTitleConfirm"]',
+                deleteMultipleYesButton: '@Localizer["SWDeleteMultipleYesButton"]',
+                deleteMultipleNoButton: '@Localizer["SWDeleteMultipleNoButton"]',
+                deleteNoRecordSelectedTitle: '@Localizer["SWDeleteNoRecordSelectedTitle"]',
+                deleteNoRecordSelectedText: '@Localizer["SWDeleteNoRecordSelectedText"]'
+            };
+        </script>
         @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>

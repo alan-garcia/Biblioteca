@@ -372,6 +372,30 @@
   <data name="PrimeraPagina" xml:space="preserve">
     <value>Primera página</value>
   </data>
+  <data name="SWDeleteMultipleNoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SWDeleteMultipleTitleConfirm" xml:space="preserve">
+    <value>¿Seguro que quieres eliminar los registros seleccionados?</value>
+  </data>
+  <data name="SWDeleteMultipleYesButton" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="SWDeleteNoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SWDeleteNoRecordSelectedText" xml:space="preserve">
+    <value>Por favor, selecciona al menos un registro para eliminar</value>
+  </data>
+  <data name="SWDeleteNoRecordSelectedTitle" xml:space="preserve">
+    <value>¡Cuidado!</value>
+  </data>
+  <data name="SWDeleteTitleConfirm" xml:space="preserve">
+    <value>¿Seguro que quieres eliminar este registro?</value>
+  </data>
+  <data name="SWDeleteYesButton" xml:space="preserve">
+    <value>Sí</value>
+  </data>
   <data name="UltimaPagina" xml:space="preserve">
     <value>Última página</value>
   </data>
