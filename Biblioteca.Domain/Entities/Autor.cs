@@ -2,7 +2,7 @@
 
 namespace BibliotecaNET8.Domain.Entities;
 
-public class Autor : BaseEntity
+public class Autor : IBaseEntity
 {
     public int Id { get; set; }
 
@@ -17,5 +17,4 @@ public class Autor : BaseEntity
     public DateTime FechaNacimiento { get; set; }
 
     public virtual ICollection<Libro> Libros { get; set; }
-    
 }

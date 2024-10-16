@@ -8,7 +8,7 @@ namespace BibliotecaNET8.Web.Config;
 public static class LocalizationConfig
 {
     /// <summary>
-    ///     Configura la localización para cargar las rutas donde se ubican las traducciones (.resx), 
+    ///     Configura la localización para cargar las rutas donde se ubican las traducciones (.resx),
     ///     con el soporte para multi-idioma
     /// </summary>
     /// <param name="services">La colección de servicios provenientes del contenedor de dependencias (Program.cs).</param>

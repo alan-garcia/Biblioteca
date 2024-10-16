@@ -3,7 +3,6 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
 using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
-using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
 
 namespace BibliotecaNET8.Application.Services.Impl;
@@ -11,19 +10,17 @@ namespace BibliotecaNET8.Application.Services.Impl;
 public class ClienteService : IClienteService
 {
     private readonly IGenericRepository<Cliente> _clienteRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public ClienteService(IGenericRepository<Cliente> clienteRepository, IUnitOfWork unitOfWork)
+    public ClienteService(IGenericRepository<Cliente> clienteRepository)
     {
         _clienteRepository = clienteRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <summary>
     ///     Obtiene todos los clientes.
     /// </summary>
     /// <returns>Lista de clientes.</returns>
-    public async Task<IQueryable<Cliente>> GetAllClientes() => await _clienteRepository.GetAll();
+    public IQueryable<Cliente> GetAllClientes() => _clienteRepository.GetAll();
 
     /// <summary>
     ///     Obtiene la lista de clientes paginados, con su número de página, tamaño de paginación, total elementos,
@@ -43,7 +40,7 @@ public class ClienteService : IClienteService
     /// </summary>
     /// <param name="id">ID del cliente.</param>
     /// <returns>El cliente correspondiente a su ID.</returns>
-    public async Task<Cliente> GetClienteById(int? id)
+    public async Task<Cliente?> GetClienteById(int? id)
     {
         return await _clienteRepository.GetById(id);
     }
@@ -52,19 +49,13 @@ public class ClienteService : IClienteService
     ///     Inserta un cliente.
     /// </summary>
     /// <param name="cliente">El cliente.</param>
-    public async Task AddCliente(Cliente cliente)
-    {
-        await _clienteRepository.Add(cliente);
-    }
+    public void AddCliente(Cliente cliente) => _clienteRepository.Add(cliente);
 
     /// <summary>
     ///     Actualiza un cliente.
     /// </summary>
     /// <param name="cliente">El cliente.</param>
-    public async Task UpdateCliente(Cliente cliente)
-    {
-        await _clienteRepository.Update(cliente);
-    }
+    public void UpdateCliente(Cliente cliente) => _clienteRepository.Update(cliente);
 
     /// <summary>
     ///     Elimina un cliente.
@@ -86,14 +77,14 @@ public class ClienteService : IClienteService
     /// </summary>
     /// <param name="ids">Lista de IDs de los clientes. Los checkboxes seleccionados en la vista almacenan sus IDs.</param>
     /// <returns>'true' si los clientes seleccionados se han eliminado correctamente, 'false' en caso contrario.</returns>
-    public async Task<bool> DeleteMultipleClientes(int[] ids)
+    public bool DeleteMultipleClientes(int[] ids)
     {
         if (ids == null || ids.Length == 0)
         {
             throw new CRUDException("No se pudo borrar múltiples clientes");
         }
 
-        return await _clienteRepository.DeleteMultiple(ids);
+        return _clienteRepository.DeleteMultiple(ids);
     }
 
     /// <summary>

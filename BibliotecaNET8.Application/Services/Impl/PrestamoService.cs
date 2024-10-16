@@ -3,7 +3,6 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
 using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
-using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
 
 namespace BibliotecaNET8.Application.Services.Impl;
@@ -11,19 +10,17 @@ namespace BibliotecaNET8.Application.Services.Impl;
 public class PrestamoService : IPrestamoService
 {
     private readonly IPrestamoRepository _prestamoRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public PrestamoService(IPrestamoRepository prestamoRepository, IUnitOfWork unitOfWork)
+    public PrestamoService(IPrestamoRepository prestamoRepository)
     {
         _prestamoRepository = prestamoRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <summary>
     ///     Obtiene todos los préstamos.
     /// </summary>
     /// <returns>Lista de préstamos.</returns>
-    public async Task<IQueryable<Prestamo>> GetAllPrestamos() => await _prestamoRepository.GetAll();
+    public IQueryable<Prestamo> GetAllPrestamos() => _prestamoRepository.GetAll();
 
     /// <summary>
     ///     Obtiene la lista de préstamos paginados, con su número de página, tamaño de paginación, total elementos,
@@ -43,7 +40,7 @@ public class PrestamoService : IPrestamoService
     /// </summary>
     /// <param name="id">ID del préstamo.</param>
     /// <returns>El préstamo correspondiente a su ID.</returns>
-    public async Task<Prestamo> GetPrestamoById(int? id)
+    public async Task<Prestamo?> GetPrestamoById(int? id)
     {
         return await _prestamoRepository.GetById(id);
     }
@@ -52,19 +49,13 @@ public class PrestamoService : IPrestamoService
     ///     Inserta un préstamo.
     /// </summary>
     /// <param name="prestamo">El préstamo.</param>
-    public async Task AddPrestamo(Prestamo prestamo)
-    {
-        await _prestamoRepository.Add(prestamo);
-    }
+    public void AddPrestamo(Prestamo prestamo) => _prestamoRepository.Add(prestamo);
 
     /// <summary>
     ///     Actualiza un préstamo.
     /// </summary>
     /// <param name="prestamo">El préstamo.</param>
-    public async Task UpdatePrestamo(Prestamo prestamo)
-    {
-        await _prestamoRepository.Update(prestamo);
-    }
+    public void UpdatePrestamo(Prestamo prestamo) => _prestamoRepository.Update(prestamo);
 
     /// <summary>
     ///     Elimina un préstamo.
@@ -86,14 +77,14 @@ public class PrestamoService : IPrestamoService
     /// </summary>
     /// <param name="ids">Lista de IDs de los préstamos. Los checkboxes seleccionados en la vista almacenan sus IDs.</param>
     /// <returns>'true' si los préstamos seleccionados se han eliminado correctamente, 'false' en caso contrario.</returns>
-    public async Task<bool> DeleteMultiplePrestamos(int[] ids)
+    public bool DeleteMultiplePrestamos(int[] ids)
     {
         if (ids == null || ids.Length == 0)
         {
             throw new CRUDException("No se pudo borrar múltiples préstamos");
         }
 
-        return await _prestamoRepository.DeleteMultiple(ids);
+        return _prestamoRepository.DeleteMultiple(ids);
     }
 
     /// <summary>

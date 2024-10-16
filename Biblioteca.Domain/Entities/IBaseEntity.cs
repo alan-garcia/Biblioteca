@@ -1,6 +1,6 @@
 ﻿namespace BibliotecaNET8.Domain.Entities;
 
-public interface BaseEntity
+public interface IBaseEntity
 {
     public int Id { get; set; }
 }

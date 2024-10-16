@@ -46,7 +46,9 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         var error = HttpContext.Features.Get<IExceptionHandlerFeature>();
-        return View(new ErrorVM { Message = "Ocurrió un problema", ErrorDetails = error?.Error.Message });
+        return View(
+            new ErrorVM { Message = "Ocurrió un problema", ErrorDetails = error.Error.Message }
+        );
     }
 
     /// <summary>
@@ -63,9 +65,14 @@ public class HomeController : Controller
             case 403:
                 return View("403");
             case 404:
-                return View("404", new ErrorVM { Message = "La página solicitada no existe", StatusCode = code });
+                return View("404",
+                    new ErrorVM { Message = "La página solicitada no existe", StatusCode = code }
+                );
             default:
-                return View("GeneralError", new ErrorVM { Message = "Ocurrió un problema", StatusCode = code });
+                return View(
+                    "GeneralError",
+                    new ErrorVM { Message = "Ocurrió un problema", StatusCode = code }
+                );
         }
     }
 }

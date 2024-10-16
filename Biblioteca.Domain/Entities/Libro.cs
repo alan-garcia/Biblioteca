@@ -2,7 +2,7 @@
 
 namespace BibliotecaNET8.Domain.Entities;
 
-public class Libro : BaseEntity
+public class Libro : IBaseEntity
 {
     public int Id { get; set; }
 

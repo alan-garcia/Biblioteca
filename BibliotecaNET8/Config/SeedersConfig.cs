@@ -9,7 +9,7 @@ namespace BibliotecaNET8.Web.Config;
 public static class SeedersConfig
 {
     /// <summary>
-    ///     Al iniciar la aplicación, aplicar todas las migraciones pendientes de la Base de Datos, 
+    ///     Al iniciar la aplicación, aplicar todas las migraciones pendientes de la Base de Datos,
     ///     y agregar los datos de prueba de todos los Seeders en el AppDbContext.
     /// </summary>
     /// <param name="app">Configuración proveniente del contenedor de dependencias (Program.cs).</param>
@@ -25,7 +25,7 @@ public static class SeedersConfig
     }
 
     /// <summary>
-    ///     Cuando se detiene la aplicación, procede a eliminar todos los datos de prueba 
+    ///     Cuando se detiene la aplicación, procede a eliminar todos los datos de prueba
     ///     en todas las tablas de la Base de Datos.
     /// </summary>
     /// <param name="app">Configuración proveniente del contenedor de dependencias (Program.cs).</param>

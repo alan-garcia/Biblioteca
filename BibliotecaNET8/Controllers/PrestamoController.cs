@@ -71,9 +71,9 @@ public class PrestamoController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
-        PrestamoCreateVM prestamoVM = await LoadClientesLibrosDropdownList();
+        PrestamoCreateVM prestamoVM = LoadClientesLibrosDropdownList();
         if (!prestamoVM.Libros.Any() || !prestamoVM.Clientes.Any())
         {
             TempData["ExisteLibroClienteCreate"] = _localizer["ExisteLibroClienteCreate"].Value;
@@ -93,7 +93,7 @@ public class PrestamoController : Controller
             try
             {
                 Prestamo prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
-                await _prestamoService.AddPrestamo(prestamo);
+                _prestamoService.AddPrestamo(prestamo);
                 await _unitOfWork.Save();
                 TempData["PrestamoMensajes"] = _localizer["PrestamoCreadoMessageSuccess"].Value;
 
@@ -106,7 +106,7 @@ public class PrestamoController : Controller
         }
 
         result.AddToModelState(ModelState);
-        prestamoVM = await LoadClientesLibrosDropdownList();
+        prestamoVM = LoadClientesLibrosDropdownList();
 
         return View(prestamoVM);
     }
@@ -116,13 +116,13 @@ public class PrestamoController : Controller
     {
         try
         {
-            Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
+            Prestamo? prestamo = await _prestamoService.GetPrestamoById(id);
             if (prestamo == null)
             {
                 return NotFound();
             }
 
-            PrestamoCreateVM prestamoVM = await LoadClientesLibrosDropdownList();
+            PrestamoCreateVM prestamoVM = LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
             prestamoVM.FechaPrestamo = prestamo.FechaPrestamo;
             prestamoVM.FechaDevolucion = prestamo.FechaDevolucion;
@@ -143,13 +143,13 @@ public class PrestamoController : Controller
         PrestamoCreateVM prestamoVM;
         try
         {
-            Prestamo prestamo = await _prestamoService.GetPrestamoById(id);
+            Prestamo? prestamo = await _prestamoService.GetPrestamoById(id);
             if (prestamo == null)
             {
                 return NotFound();
             }
 
-            prestamoVM = await LoadClientesLibrosDropdownList();
+            prestamoVM = LoadClientesLibrosDropdownList();
             prestamoVM.Id = prestamo.Id;
             prestamoVM.FechaPrestamo = prestamo.FechaPrestamo;
             prestamoVM.FechaDevolucion = prestamo.FechaDevolucion;
@@ -180,7 +180,7 @@ public class PrestamoController : Controller
             try
             {
                 Prestamo prestamo = _mapper.Map<Prestamo>(source: prestamoDTO);
-                await _prestamoService.UpdatePrestamo(prestamo);
+                _prestamoService.UpdatePrestamo(prestamo);
                 await _unitOfWork.Save();
                 TempData["PrestamoMensajes"] = _localizer["PrestamoModificadoMessageSuccess"].Value;
 
@@ -236,7 +236,7 @@ public class PrestamoController : Controller
         string message;
         try
         {
-            isDeleted = await _prestamoService.DeleteMultiplePrestamos(idsPrestamo);
+            isDeleted = _prestamoService.DeleteMultiplePrestamos(idsPrestamo);
             if (isDeleted)
             {
                 message = _localizer["PrestamoEliminadoMultipleMessageSuccess"].Value;
@@ -264,7 +264,10 @@ public class PrestamoController : Controller
     public async Task<IActionResult> Search(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        term = (term == PaginationSettings.ShowAllRecordsText) ? string.Empty : term?.ToLower().Trim();
+        term = (term == PaginationSettings.ShowAllRecordsText)
+            ? string.Empty
+            : term?.ToLower().Trim();
+
         ViewData["CurrentSearchTerm"] = term;
         IQueryable<Prestamo> filtroPrestamos;
         IQueryable<Prestamo> filtroPrestamosSearch;
@@ -292,10 +295,10 @@ public class PrestamoController : Controller
     /// </summary>
     /// <param name="prestamoVM">El ViewModel a asignar en la vista.</param>
     /// <returns>ViewModel con la lista de clientes y libros cargadas</returns>
-    private async Task<PrestamoCreateVM> LoadClientesLibrosDropdownList(PrestamoCreateVM? prestamoVM = null)
+    private PrestamoCreateVM LoadClientesLibrosDropdownList(PrestamoCreateVM? prestamoVM = null)
     {
-        IEnumerable<Cliente> clientes = await _clienteService.GetAllClientes();
-        IEnumerable<Libro> libros = await _libroService.GetAllLibros();
+        IEnumerable<Cliente> clientes = _clienteService.GetAllClientes();
+        IEnumerable<Libro> libros = _libroService.GetAllLibros();
 
         prestamoVM ??= new PrestamoCreateVM();
         prestamoVM.Clientes = clientes.Select(cliente => new SelectListItem

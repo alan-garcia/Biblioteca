@@ -38,7 +38,7 @@ public class ClienteController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        IQueryable<Cliente> clientes = await _clienteService.GetAllClientes();
+        IQueryable<Cliente> clientes = _clienteService.GetAllClientes();
         PagedResult<ClienteVM> clientesPagedVM = new();
         
         term = term?.ToLower().Trim();
@@ -78,7 +78,7 @@ public class ClienteController : Controller
             try
             {
                 Cliente cliente = _mapper.Map<Cliente>(source: clienteDTO);
-                await _clienteService.AddCliente(cliente);
+                _clienteService.AddCliente(cliente);
                 await _unitOfWork.Save();
                 TempData["ClientesMensaje"] = _localizer["ClienteCreadoMessageSuccess"].Value;
 
@@ -145,7 +145,7 @@ public class ClienteController : Controller
             try
             {
                 Cliente? cliente = _mapper.Map<Cliente>(source: clienteDTO);
-                await _clienteService.UpdateCliente(cliente);
+                _clienteService.UpdateCliente(cliente);
                 await _unitOfWork.Save();
                 TempData["ClientesMensaje"] = _localizer["ClienteModificadoMessageSuccess"].Value;
 
@@ -201,7 +201,7 @@ public class ClienteController : Controller
         string message;
         try
         {
-            isDeleted = await _clienteService.DeleteMultipleClientes(idsCliente);
+            isDeleted = _clienteService.DeleteMultipleClientes(idsCliente);
             if (isDeleted)
             {
                 message = _localizer["ClienteEliminadoMultipleMessageSuccess"].Value;
@@ -229,7 +229,10 @@ public class ClienteController : Controller
     public async Task<IActionResult> Search(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        term = (term == PaginationSettings.ShowAllRecordsText) ? string.Empty : term?.ToLower().Trim();
+        term = (term == PaginationSettings.ShowAllRecordsText)
+            ? string.Empty
+            : term?.ToLower().Trim();
+
         ViewData["CurrentSearchTerm"] = term;
         IQueryable<Cliente> filtroClientes;
         try

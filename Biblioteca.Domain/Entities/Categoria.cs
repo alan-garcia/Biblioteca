@@ -2,7 +2,7 @@
 
 namespace BibliotecaNET8.Domain.Entities;
 
-public class Categoria : BaseEntity
+public class Categoria : IBaseEntity
 {
     public int Id { get; set; }
 

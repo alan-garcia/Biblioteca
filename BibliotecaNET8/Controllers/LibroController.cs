@@ -70,9 +70,9 @@ public class LibroController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
-        LibroCreateVM libroVM = await LoadAutoresCategoriasDropdownList();
+        LibroCreateVM libroVM = LoadAutoresCategoriasDropdownList();
         if (!libroVM.Autores.Any() || !libroVM.Categorias.Any())
         {
             TempData["ExisteAutorCategoria"] = _localizer["ExisteAutorCategoriaCreate"].Value;
@@ -96,11 +96,11 @@ public class LibroController : Controller
                 if (hasError)
                 {
                     ModelState.AddModelError("Imagen", _localizer["LibroImageUploadSize"]);
-                    libroVM = await LoadAutoresCategoriasDropdownList();
+                    libroVM = LoadAutoresCategoriasDropdownList();
                     return View(libroVM);
                 }
 
-                await _libroService.AddLibro(libroFinal);
+                _libroService.AddLibro(libroFinal);
                 await _unitOfWork.Save();
                 TempData["LibroMensajes"] = _localizer["LibroCreadoMessageSuccess"].Value;
 
@@ -113,7 +113,7 @@ public class LibroController : Controller
         }
 
         result.AddToModelState(ModelState);
-        libroVM = await LoadAutoresCategoriasDropdownList();
+        libroVM = LoadAutoresCategoriasDropdownList();
 
         return View(libroVM);
     }
@@ -123,13 +123,13 @@ public class LibroController : Controller
     {
         try
         {
-            Libro libro = await _libroService.GetLibroById(id);
+            Libro? libro = await _libroService.GetLibroById(id);
             if (libro == null)
             {
                 return NotFound();
             }
 
-            LibroCreateVM libroVM = await LoadAutoresCategoriasDropdownList();
+            LibroCreateVM libroVM = LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
             libroVM.Titulo = libro.Titulo;
             libroVM.ISBN = libro.ISBN;
@@ -152,13 +152,13 @@ public class LibroController : Controller
         LibroCreateVM libroVM;
         try
         {
-            Libro libro = await _libroService.GetLibroById(id);
+            Libro? libro = await _libroService.GetLibroById(id);
             if (libro == null)
             {
                 return NotFound();
             }
 
-            libroVM = await LoadAutoresCategoriasDropdownList();
+            libroVM = LoadAutoresCategoriasDropdownList();
             libroVM.Id = libro.Id;
             libroVM.Titulo = libro.Titulo;
             libroVM.ISBN = libro.ISBN;
@@ -195,7 +195,7 @@ public class LibroController : Controller
                 if (hasError)
                 {
                     ModelState.AddModelError("Imagen", _localizer["LibroImageUploadSize"]);
-                    libroVM = await LoadAutoresCategoriasDropdownList();
+                    libroVM = LoadAutoresCategoriasDropdownList();
                     if (!string.IsNullOrEmpty(ImagenActual))
                     {
                         libroVM.Imagen = Convert.FromBase64String(ImagenActual);
@@ -203,7 +203,7 @@ public class LibroController : Controller
                     return View(libroVM);
                 }
 
-                await _libroService.UpdateLibro(libroFinal);
+                _libroService.UpdateLibro(libroFinal);
                 await _unitOfWork.Save();
                 TempData["LibroMensajes"] = _localizer["LibroModificadoMessageSuccess"].Value;
 
@@ -216,7 +216,7 @@ public class LibroController : Controller
         }
         else
         {
-            libroVM = await LoadAutoresCategoriasDropdownList();
+            libroVM = LoadAutoresCategoriasDropdownList();
         }
 
         result.AddToModelState(ModelState);
@@ -263,7 +263,7 @@ public class LibroController : Controller
         string message;
         try
         {
-            isDeleted = await _libroService.DeleteMultipleLibros(idsLibro);
+            isDeleted = _libroService.DeleteMultipleLibros(idsLibro);
             if (isDeleted)
             {
                 message = _localizer["LibroEliminadoMultipleMessageSuccess"].Value;
@@ -291,7 +291,10 @@ public class LibroController : Controller
     public async Task<IActionResult> Search(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        term = (term == PaginationSettings.ShowAllRecordsText) ? string.Empty : term?.ToLower().Trim();
+        term = (term == PaginationSettings.ShowAllRecordsText)
+            ? string.Empty
+            : term?.ToLower().Trim();
+
         ViewData["CurrentSearchTerm"] = term;
         IQueryable<Libro> filtroLibros;
         IQueryable<Libro> filtroLibrosSearch;
@@ -318,10 +321,10 @@ public class LibroController : Controller
     /// </summary>
     /// <param name="libroVM">El ViewModel a asignar en la vista.</param>
     /// <returns>ViewModel con la lista de autores y categorías cargadas</returns>
-    private async Task<LibroCreateVM> LoadAutoresCategoriasDropdownList(LibroCreateVM? libroVM = null)
+    private LibroCreateVM LoadAutoresCategoriasDropdownList(LibroCreateVM? libroVM = null)
     {
-        IEnumerable<Autor> autores = await _autorService.GetAllAutores();
-        IEnumerable<Categoria> categorias = await _categoriaService.GetAllCategorias();
+        IEnumerable<Autor> autores = _autorService.GetAllAutores();
+        IEnumerable<Categoria> categorias = _categoriaService.GetAllCategorias();
 
         libroVM ??= new LibroCreateVM();
         libroVM.Autores = autores.Select(autor => new SelectListItem

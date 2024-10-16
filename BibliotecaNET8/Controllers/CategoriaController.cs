@@ -38,7 +38,7 @@ public class CategoriaController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        IQueryable<Categoria> categorias = await _categoriaService.GetAllCategorias();
+        IQueryable<Categoria> categorias = _categoriaService.GetAllCategorias();
         PagedResult<CategoriaVM> categoriasPagedVM = new();
         
         term = term?.ToLower().Trim();
@@ -75,7 +75,7 @@ public class CategoriaController : Controller
             try
             {
                 Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
-                await _categoriaService.AddCategoria(categoria);
+                _categoriaService.AddCategoria(categoria);
                 await _unitOfWork.Save();
                 TempData["CategoriasMensaje"] = _localizer["CategoriaCreadaMessageSuccess"].Value;
 
@@ -97,7 +97,7 @@ public class CategoriaController : Controller
     {
         try
         {
-            Categoria categoria = await _categoriaService.GetCategoriaById(id);
+            Categoria? categoria = await _categoriaService.GetCategoriaById(id);
             if (categoria == null)
             {
                 return NotFound();
@@ -117,7 +117,7 @@ public class CategoriaController : Controller
     {
         try
         {
-            Categoria categoria = await _categoriaService.GetCategoriaById(id);
+            Categoria? categoria = await _categoriaService.GetCategoriaById(id);
             if (categoria == null)
             {
                 return NotFound();
@@ -142,7 +142,7 @@ public class CategoriaController : Controller
             try
             {
                 Categoria categoria = _mapper.Map<Categoria>(source: categoriaDTO);
-                await _categoriaService.UpdateCategoria(categoria);
+                _categoriaService.UpdateCategoria(categoria);
                 await _unitOfWork.Save();
                 TempData["CategoriasMensaje"] = _localizer["CategoriaModificadaMessageSuccess"].Value;
 
@@ -198,7 +198,7 @@ public class CategoriaController : Controller
         string message;
         try
         {
-            isDeleted = await _categoriaService.DeleteMultipleCategorias(idsCategoria);
+            isDeleted = _categoriaService.DeleteMultipleCategorias(idsCategoria);
             if (isDeleted)
             {
                 message = _localizer["CategoriaEliminadaMultipleMessageSuccess"].Value;
@@ -226,7 +226,10 @@ public class CategoriaController : Controller
     public async Task<IActionResult> Search(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        term = (term == PaginationSettings.ShowAllRecordsText) ? string.Empty : term?.ToLower().Trim();
+        term = (term == PaginationSettings.ShowAllRecordsText)
+            ? string.Empty
+            : term?.ToLower().Trim();
+
         ViewData["CurrentSearchTerm"] = term;
         IQueryable<Categoria> filtroCategorias;
         try

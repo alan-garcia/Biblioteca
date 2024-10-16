@@ -3,7 +3,6 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
 using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
-using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
 
@@ -12,19 +11,17 @@ namespace BibliotecaNET8.Application.Services.Impl;
 public class LibroService : ILibroService
 {
     private readonly ILibroRepository _libroRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public LibroService(ILibroRepository libroRepository, IUnitOfWork unitOfWork)
+    public LibroService(ILibroRepository libroRepository)
     {
         _libroRepository = libroRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <summary>
     ///     Obtiene todos los libros.
     /// </summary>
     /// <returns>Lista de libros.</returns>
-    public async Task<IQueryable<Libro>> GetAllLibros() => await _libroRepository.GetAll();
+    public IQueryable<Libro> GetAllLibros() => _libroRepository.GetAll();
 
     /// <summary>
     ///     Obtiene la lista de libros paginados, con su número de página, tamaño de paginación, total elementos,
@@ -44,7 +41,7 @@ public class LibroService : ILibroService
     /// </summary>
     /// <param name="id">ID del libro.</param>
     /// <returns>El libro correspondiente a su ID.</returns>
-    public async Task<Libro> GetLibroById(int? id)
+    public async Task<Libro?> GetLibroById(int? id)
     {
         return await _libroRepository.GetById(id);
     }
@@ -53,19 +50,13 @@ public class LibroService : ILibroService
     ///     Inserta un libro.
     /// </summary>
     /// <param name="libro">El libro.</param>
-    public async Task AddLibro(Libro libro)
-    {
-        await _libroRepository.Add(libro);
-    }
+    public void AddLibro(Libro libro) => _libroRepository.Add(libro);
 
     /// <summary>
     ///     Actualiza un libro.
     /// </summary>
     /// <param name="libro">El libro.</param>
-    public async Task UpdateLibro(Libro libro)
-    {
-        await _libroRepository.Update(libro);
-    }
+    public void UpdateLibro(Libro libro) => _libroRepository.Update(libro);
 
     /// <summary>
     ///     Elimina un libro.
@@ -87,14 +78,14 @@ public class LibroService : ILibroService
     /// </summary>
     /// <param name="ids">Lista de IDs de los libros. Los checkboxes seleccionados en la vista almacenan sus IDs.</param>
     /// <returns>'true' si los libros seleccionados se han eliminado correctamente, 'false' en caso contrario.</returns>
-    public async Task<bool> DeleteMultipleLibros(int[] ids)
+    public bool DeleteMultipleLibros(int[] ids)
     {
         if (ids == null || ids.Length == 0)
         {
             throw new CRUDException("No se pudo borrar múltiples libros");
         }
 
-        return await _libroRepository.DeleteMultiple(ids);
+        return _libroRepository.DeleteMultiple(ids);
     }
 
     /// <summary>

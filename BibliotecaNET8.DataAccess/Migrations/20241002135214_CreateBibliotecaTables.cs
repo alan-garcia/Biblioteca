@@ -23,10 +23,7 @@ namespace BibliotecaNET8.Migrations
                     Apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Autores", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Autores", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Categorias",
@@ -36,10 +33,7 @@ namespace BibliotecaNET8.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categorias", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Categorias", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Clientes",
@@ -52,10 +46,7 @@ namespace BibliotecaNET8.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Clientes", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Libros",
@@ -123,7 +114,7 @@ namespace BibliotecaNET8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Autores",
-                columns: new[] { "Id", "Apellido", "FechaNacimiento", "Nombre" },
+                columns: ["Id", "Apellido", "FechaNacimiento", "Nombre"],
                 values: new object[,]
                 {
                     { 1, "Shelley", new DateTime(2024, 10, 2, 0, 0, 0, 0, DateTimeKind.Local), "Mary" },
@@ -155,7 +146,7 @@ namespace BibliotecaNET8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categorias",
-                columns: new[] { "Id", "Nombre" },
+                columns: ["Id", "Nombre"],
                 values: new object[,]
                 {
                     { 1, "Acción" },
@@ -167,7 +158,7 @@ namespace BibliotecaNET8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Clientes",
-                columns: new[] { "Id", "Apellido", "Email", "Nombre", "Telefono" },
+                columns: ["Id", "Apellido", "Email", "Nombre", "Telefono"],
                 values: new object[,]
                 {
                     { 1, "Díaz Ramírez", "test@test.com", "José", "999123456" },
@@ -184,7 +175,7 @@ namespace BibliotecaNET8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Libros",
-                columns: new[] { "Id", "AutorId", "CategoriaId", "ClienteId", "FechaPublicacion", "ISBN", "Imagen", "Titulo" },
+                columns: ["Id", "AutorId", "CategoriaId", "ClienteId", "FechaPublicacion", "ISBN", "Imagen", "Titulo"],
                 values: new object[,]
                 {
                     { 1, 1, 1, null, new DateTime(2024, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "087402", null, "Los Pilares de la Tierra" },
@@ -206,7 +197,7 @@ namespace BibliotecaNET8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Prestamo",
-                columns: new[] { "Id", "ClienteId", "FechaDevolucion", "FechaPrestamo", "LibroId" },
+                columns: ["Id", "ClienteId", "FechaDevolucion", "FechaPrestamo", "LibroId"],
                 values: new object[,]
                 {
                     { 1, 1, new DateTime(2024, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },

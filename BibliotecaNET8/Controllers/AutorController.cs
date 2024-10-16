@@ -38,7 +38,7 @@ public class AutorController : Controller
     public async Task<IActionResult> Index(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        IQueryable<Autor> autores = await _autorService.GetAllAutores();
+        IQueryable<Autor> autores = _autorService.GetAllAutores();
         PagedResult<AutorVM> autoresPagedVM = new();
 
         term = term?.ToLower().Trim();
@@ -76,7 +76,7 @@ public class AutorController : Controller
             try
             {
                 Autor autor = _mapper.Map<Autor>(source: autorDTO);
-                await _autorService.AddAutor(autor);
+                _autorService.AddAutor(autor);
                 await _unitOfWork.Save();
                 TempData["AutoresMensaje"] = _localizer["AutorCreadoMessageSuccess"].Value;
 
@@ -98,7 +98,7 @@ public class AutorController : Controller
     {
         try
         {
-            Autor autor = await _autorService.GetAutorById(id);
+            Autor? autor = await _autorService.GetAutorById(id);
             if (autor == null)
             {
                 return NotFound();
@@ -118,7 +118,7 @@ public class AutorController : Controller
     {
         try
         {
-            Autor autor = await _autorService.GetAutorById(id);
+            Autor? autor = await _autorService.GetAutorById(id);
             if (autor == null)
             {
                 return NotFound();
@@ -143,7 +143,7 @@ public class AutorController : Controller
             try
             {
                 Autor autor = _mapper.Map<Autor>(source: autorDTO);
-                await _autorService.UpdateAutor(autor);
+                _autorService.UpdateAutor(autor);
                 await _unitOfWork.Save();
                 TempData["AutoresMensaje"] = _localizer["AutorModificadoMessageSuccess"].Value;
 
@@ -199,7 +199,7 @@ public class AutorController : Controller
         string message;
         try
         {
-            isDeleted = await _autorService.DeleteMultipleAutores(idsAutor);
+            isDeleted = _autorService.DeleteMultipleAutores(idsAutor);
             if (isDeleted)
             {
                 message = _localizer["AutorEliminadoMultipleMessageSuccess"].Value;
@@ -227,7 +227,10 @@ public class AutorController : Controller
     public async Task<IActionResult> Search(string? term = "", int pageNumber = PaginationSettings.PageNumber,
         int pageSize = PaginationSettings.PageSize)
     {
-        term = (term == PaginationSettings.ShowAllRecordsText) ? string.Empty : term?.ToLower().Trim();
+        term = (term == PaginationSettings.ShowAllRecordsText)
+            ? string.Empty
+            : term?.ToLower().Trim();
+
         ViewData["CurrentSearchTerm"] = term;
         IQueryable<Autor> filtroAutores;
         try

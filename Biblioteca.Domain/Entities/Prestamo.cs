@@ -2,7 +2,7 @@
 
 namespace BibliotecaNET8.Domain.Entities;
 
-public class Prestamo : BaseEntity
+public class Prestamo : IBaseEntity
 {
     public int Id { get; set; }
 

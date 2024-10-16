@@ -3,7 +3,6 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
 using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
-using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
 
 namespace BibliotecaNET8.Application.Services.Impl;
@@ -11,19 +10,17 @@ namespace BibliotecaNET8.Application.Services.Impl;
 public class AutorService : IAutorService
 {
     private readonly IGenericRepository<Autor> _autorRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public AutorService(IGenericRepository<Autor> autorRepository, IUnitOfWork unitOfWork)
+    public AutorService(IGenericRepository<Autor> autorRepository)
     {
         _autorRepository = autorRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <summary>
     ///     Obtiene todos los autores.
     /// </summary>
     /// <returns>Lista de autores.</returns>
-    public async Task<IQueryable<Autor>> GetAllAutores() => await _autorRepository.GetAll();
+    public IQueryable<Autor> GetAllAutores() => _autorRepository.GetAll();
 
     /// <summary>
     ///     Obtiene la lista de autores paginados, con su número de página, tamaño de paginación, total elementos,
@@ -43,28 +40,19 @@ public class AutorService : IAutorService
     /// </summary>
     /// <param name="id">ID del autor.</param>
     /// <returns>El autor correspondiente a su ID.</returns>
-    public async Task<Autor> GetAutorById(int? id)
-    {
-        return await _autorRepository.GetById(id);
-    }
+    public async Task<Autor?> GetAutorById(int? id) => await _autorRepository.GetById(id);
 
     /// <summary>
     ///     Inserta un autor.
     /// </summary>
     /// <param name="autor">El autor.</param>
-    public async Task AddAutor(Autor autor)
-    {
-        await _autorRepository.Add(autor);
-    }
+    public void AddAutor(Autor autor) => _autorRepository.Add(autor);
 
     /// <summary>
     ///     Actualiza un autor.
     /// </summary>
     /// <param name="autor">El autor.</param>
-    public async Task UpdateAutor(Autor autor)
-    {
-        await _autorRepository.Update(autor);
-    }
+    public void UpdateAutor(Autor autor) => _autorRepository.Update(autor);
 
     /// <summary>
     ///     Elimina un autor.
@@ -86,14 +74,14 @@ public class AutorService : IAutorService
     /// </summary>
     /// <param name="ids">Lista de IDs de los autores. Los checkboxes seleccionados en la vista almacenan sus IDs.</param>
     /// <returns>'true' si los autores seleccionados se han eliminado correctamente, 'false' en caso contrario.</returns>
-    public async Task<bool> DeleteMultipleAutores(int[] ids)
+    public bool DeleteMultipleAutores(int[] ids)
     {
         if (ids == null || ids.Length == 0)
         {
             throw new CRUDException("No se pudo borrar múltiples autores");
         }
 
-        return await _autorRepository.DeleteMultiple(ids);
+        return _autorRepository.DeleteMultiple(ids);
     }
 
     /// <summary>

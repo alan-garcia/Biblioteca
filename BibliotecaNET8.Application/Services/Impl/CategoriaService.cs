@@ -3,7 +3,6 @@ using BibliotecaNET8.Domain;
 using BibliotecaNET8.Domain.Entities;
 using BibliotecaNET8.Domain.Exceptions;
 using BibliotecaNET8.Domain.Repositories.Interfaces;
-using BibliotecaNET8.Domain.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
 
 namespace BibliotecaNET8.Application.Services.Impl;
@@ -11,19 +10,17 @@ namespace BibliotecaNET8.Application.Services.Impl;
 public class CategoriaService : ICategoriaService
 {
     private readonly IGenericRepository<Categoria> _categoriaRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public CategoriaService(IGenericRepository<Categoria> categoriaRepository, IUnitOfWork unitOfWork)
+    public CategoriaService(IGenericRepository<Categoria> categoriaRepository)
     {
         _categoriaRepository = categoriaRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <summary>
     ///     Obtiene todas las categorías.
     /// </summary>
     /// <returns>Lista de categorías.</returns>
-    public async Task<IQueryable<Categoria>> GetAllCategorias() => await _categoriaRepository.GetAll();
+    public IQueryable<Categoria> GetAllCategorias() => _categoriaRepository.GetAll();
 
     /// <summary>
     ///     Obtiene la lista de categorías paginadas, con su número de página, tamaño de paginación, total elementos,
@@ -43,7 +40,7 @@ public class CategoriaService : ICategoriaService
     /// </summary>
     /// <param name="id">ID de la categoría.</param>
     /// <returns>La categoría correspondiente a su ID.</returns>
-    public async Task<Categoria> GetCategoriaById(int? id)
+    public async Task<Categoria?> GetCategoriaById(int? id)
     {
         return await _categoriaRepository.GetById(id);
     }
@@ -52,19 +49,13 @@ public class CategoriaService : ICategoriaService
     ///     Inserta una categoría.
     /// </summary>
     /// <param name="categoria">La categoría.</param>
-    public async Task AddCategoria(Categoria categoria)
-    {
-        await _categoriaRepository.Add(categoria);
-    }
+    public void AddCategoria(Categoria categoria) => _categoriaRepository.Add(categoria);
 
     /// <summary>
     ///     Actualiza una categoría.
     /// </summary>
     /// <param name="categoria">La categoría.</param>
-    public async Task UpdateCategoria(Categoria categoria)
-    {
-        await _categoriaRepository.Update(categoria);
-    }
+    public void UpdateCategoria(Categoria categoria) => _categoriaRepository.Update(categoria);
 
     /// <summary>
     ///     Elimina una categoría.
@@ -86,14 +77,14 @@ public class CategoriaService : ICategoriaService
     /// </summary>
     /// <param name="ids">Lista de IDs de las categorías. Los checkboxes seleccionados en la vista almacenan sus IDs.</param>
     /// <returns>'true' si las categorías seleccionadas se han eliminado correctamente, 'false' en caso contrario.</returns>
-    public async Task<bool> DeleteMultipleCategorias(int[] ids)
+    public bool DeleteMultipleCategorias(int[] ids)
     {
         if (ids == null || ids.Length == 0)
         {
             throw new CRUDException("No se pudo borrar múltiples categorías");
         }
 
-        return await _categoriaRepository.DeleteMultiple(ids);
+        return _categoriaRepository.DeleteMultiple(ids);
     }
 
     /// <summary>

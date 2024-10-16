@@ -7,14 +7,17 @@ using BibliotecaNET8.Domain;
 
 namespace BibliotecaNET8.DataAccess.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseEntity
+public class GenericRepository<T> : IGenericRepository<T> where T : class, IBaseEntity
 {
     public readonly AppDbContext _context;
     public DbSet<T> Entity => _context.Set<T>();
 
-    public GenericRepository(AppDbContext context) => _context = context;
+    public GenericRepository(AppDbContext context)
+    {
+        _context = context;
+    }
 
-    public async Task<IQueryable<T>> GetAll() => Entity.AsNoTracking();
+    public IQueryable<T> GetAll() => Entity.AsNoTracking();
 
     public async Task<PagedResult<T>> GetRecordsPagedResult<T>(IQueryable<T> records, int pageNumber, int pageSize)
         where T : class
@@ -57,9 +60,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseE
         return await Entity.AsNoTracking().FirstOrDefaultAsync(entity => entity.Id == id);
     }
 
-    public async Task Add(T entity) => Entity.Add(entity);
+    public void Add(T entity) => Entity.Add(entity);
 
-    public async Task Update(T entity) => Entity.Update(entity);
+    public void Update(T entity) => Entity.Update(entity);
 
     public async Task<bool> Delete(int? id)
     {
@@ -73,7 +76,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseE
         return false;
     }
 
-    public async Task<bool> DeleteMultiple(int[] ids)
+    public bool DeleteMultiple(int[] ids)
     {
         if (ids.Length > 0)
         {
@@ -90,8 +93,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseE
         return predicate != null ? Entity.AsNoTracking().Where(predicate) : Entity;
     }
 
-    public IQueryable<T> Search<T>(IQueryable<T> queryType, Expression<Func<T, bool>> predicate)
-        where T : class
+    public IQueryable<T> Search(IQueryable<T> queryType, Expression<Func<T, bool>> predicate)
     {
         return predicate != null ? queryType.AsNoTracking().Where(predicate) : queryType;
     }

@@ -1,5 +1,3 @@
 ﻿namespace BibliotecaNET8.Web;
 
-public class Translations
-{
-}
+public class Translations;

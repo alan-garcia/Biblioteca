@@ -1,7 +1,7 @@
 ﻿namespace BibliotecaNET8.Domain;
 
 /// <summary>
-///     Estructura de una entidad de tipo "paginada" a la hora de implementar el 
+///     Estructura de una entidad de tipo "paginada" a la hora de implementar el
 ///     filtro de búsqueda con paginación
 /// </summary>
 /// <typeparam name="T">La clase de tipo entidad a aplicar.</typeparam>
